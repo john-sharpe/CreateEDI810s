@@ -1,0 +1,22 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.28307.271
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{159641D6-6404-4A2A-AE62-294DE0FE8301}") = "CreateEDI810s", "CreateEDI810s\CreateEDI810s.dtproj", "{D25195F7-E606-489E-B7EE-9CBBA0674635}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Development|Default = Development|Default
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{D25195F7-E606-489E-B7EE-9CBBA0674635}.Development|Default.ActiveCfg = Development
+		{D25195F7-E606-489E-B7EE-9CBBA0674635}.Development|Default.Build.0 = Development
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {EC052431-9D75-4293-A4F3-9B8239B17E09}
+	EndGlobalSection
+EndGlobal

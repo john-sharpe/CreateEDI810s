@@ -1,0 +1,1443 @@
+﻿<?xml version="1.0"?>
+<DTS:Executable xmlns:DTS="www.microsoft.com/SqlServer/Dts"
+  DTS:refId="Package"
+  DTS:CreationDate="6/4/2019 11:24:22 AM"
+  DTS:CreationName="Microsoft.Package"
+  DTS:CreatorComputerName="JSHARPE-P51"
+  DTS:CreatorName="JAX\JSharpe"
+  DTS:DTSID="{B2C0314C-8B3F-4A27-9C39-1A0D4AAA35DE}"
+  DTS:EnableConfig="True"
+  DTS:ExecutableType="Microsoft.Package"
+  DTS:LastModifiedProductVersion="15.0.0900.40"
+  DTS:LocaleID="1033"
+  DTS:ObjectName="CreateEDI810s"
+  DTS:PackageType="5"
+  DTS:ProtectionLevel="2"
+  DTS:VersionBuild="270"
+  DTS:VersionGUID="{BDD4E0AA-A8E0-485A-889B-45B74DB28058}">
+  <DTS:Property
+    DTS:Name="PackageFormatVersion">8</DTS:Property>
+  <DTS:ConnectionManagers>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[archive]"
+      DTS:CreationName="FILE"
+      DTS:DTSID="{86E0DAB8-2DB2-470A-B014-FFD0A97DCE50}"
+      DTS:ObjectName="archive">
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:FileUsageType="2"
+          DTS:ConnectionString="C:\Users\JSharpe\OneDrive - Swisher International, Inc\Documents\810s\archive" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[Flat File Connection Manager]"
+      DTS:CreationName="FLATFILE"
+      DTS:DTSID="{A1C042D2-C3D4-4DFA-9763-0BC2674E967F}"
+      DTS:ObjectName="Flat File Connection Manager">
+      <DTS:PropertyExpression
+        DTS:Name="ConnectionString">"C:\\Users\\JSharpe\\OneDrive - Swisher International, Inc\\Documents\\810s\\INV810-" + RIGHT("0" + (DT_STR, 4, 1252) DATEPART("yy" , GETDATE()), 4) + RIGHT("0" + (DT_STR, 2, 1252) DATEPART("mm" , GETDATE()), 2) + (DT_STR, 2, 1252) DATEPART("dd" , GETDATE())  + "-" + (DT_STR, 8, 1252)@[User::TranID] + ".txt"</DTS:PropertyExpression>
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:Format="FixedWidth"
+          DTS:LocaleID="1033"
+          DTS:HeaderRowDelimiter="_x000D__x000A_"
+          DTS:RowDelimiter=""
+          DTS:TextQualifier="_x003C_none_x003E_"
+          DTS:CodePage="1252"
+          DTS:ConnectionString="C:\Users\JSharpe\OneDrive - Swisher International, Inc\Documents\810s\INV810-20200715-0.txt">
+          <DTS:FlatFileColumns>
+            <DTS:FlatFileColumn
+              DTS:ColumnDelimiter=""
+              DTS:ColumnWidth="161"
+              DTS:DataType="129"
+              DTS:ObjectName="Column 0"
+              DTS:DTSID="{D4842D31-EE41-41DE-9EF6-1D8FDF41E79E}"
+              DTS:CreationName="" />
+          </DTS:FlatFileColumns>
+        </DTS:ConnectionManager>
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[FTP Connection Manager]"
+      DTS:CreationName="FTP"
+      DTS:DTSID="{AF792A55-DC63-4984-B159-C2AC401EEC8A}"
+      DTS:ObjectName="FTP Connection Manager">
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectionString="lexicom1.swisher.com:21">
+          <DTS:FtpConnection
+            DTS:ServerName="lexicom1.swisher.com"
+            DTS:ServerUserName="AIADMIN">
+            <EncryptedData
+              Type="http://www.w3.org/2001/04/xmlenc#Element"
+              Salt="+OJYzbZtyFQ="
+              IV="7cYtanKBBMUzdbGtvk0i5A==" xmlns="http://www.w3.org/2001/04/xmlenc#">
+              <EncryptionMethod
+                Algorithm="http://www.w3.org/2001/04/xmlenc#aes256-cbc" />
+              <CipherData>
+                <CipherValue>7cYtanKBBMUzdbGtvk0i5DiMBEnyLRIChKLEDr4Y4TDVm5dVmlbcQPOdX/H3P9sWymPw1UKdOPnizNJ1EurK5trdsbqhRPCkEWNUYwQtAcyQ3hdO+EtCmOgwSLOrAjQNJWf6d0IfOCTfkj0KmoZm+AWfAUbaYX8eina8qNkiAjt/ieqenDJGdVqvqWDQF7N1</CipherValue>
+              </CipherData>
+            </EncryptedData>
+          </DTS:FtpConnection>
+        </DTS:ConnectionManager>
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[SMTP Connection Manager]"
+      DTS:CreationName="SMTP"
+      DTS:DTSID="{41D31A4C-6F12-4CAC-AF38-7078E20CFDC5}"
+      DTS:ObjectName="SMTP Connection Manager">
+      <DTS:ObjectData>
+        <SmtpConnectionManager
+          ConnectionString="SmtpServer=swisher-com.mail.protection.outlook.com;UseWindowsAuthentication=False;EnableSsl=False;" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[sqlsw.CoreMaster.webappadmin]"
+      DTS:CreationName="OLEDB"
+      DTS:DTSID="{4B659815-D6BE-4AA3-958F-B101C3BD653B}"
+      DTS:ObjectName="sqlsw.CoreMaster.webappadmin">
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectionString="Data Source=sqlsw;User ID=webappadmin;Initial Catalog=CoreMaster;Provider=SQLNCLI11.1;Auto Translate=False;">
+          <EncryptedData
+            Type="http://www.w3.org/2001/04/xmlenc#Element"
+            Salt="GfhoHp630O4="
+            IV="dnWIcD7GleJnw+dnG1vuOQ==" xmlns="http://www.w3.org/2001/04/xmlenc#">
+            <EncryptionMethod
+              Algorithm="http://www.w3.org/2001/04/xmlenc#aes256-cbc" />
+            <CipherData>
+              <CipherValue>dnWIcD7GleJnw+dnG1vuOVSNVaG2qgigonJ1iunLGUBK9GMrVYG29SVjEsv3xbkLwxB9tBj6QqojkYJ0/gSkTgNkpApThOrw8Im6IYHd314ISN2aYHrHyUetvgvbPXODeGYJbkQcjTWjwrY58mEXSkj/yp4qDon8NrpoF86NQkGag8U6xeaVn1MZUcMDe//S</CipherValue>
+            </CipherData>
+          </EncryptedData>
+        </DTS:ConnectionManager>
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[sqlswdev.CoreMasterSB1.webappadmin]"
+      DTS:CreationName="OLEDB"
+      DTS:DTSID="{93c6ea73-d093-42d7-b809-eb22060a64d4}"
+      DTS:ObjectName="sqlswdev.CoreMasterSB1.webappadmin">
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectionString="Data Source=sqlswdev;User ID=webappadmin;Initial Catalog=CoreMasterSB1;Provider=SQLNCLI11.1;Persist Security Info=True;Auto Translate=False;">
+          <EncryptedData
+            Type="http://www.w3.org/2001/04/xmlenc#Element"
+            Salt="0iUVafPEqCg="
+            IV="dvm8uQ+gAUFtdU0/u+typw==" xmlns="http://www.w3.org/2001/04/xmlenc#">
+            <EncryptionMethod
+              Algorithm="http://www.w3.org/2001/04/xmlenc#aes256-cbc" />
+            <CipherData>
+              <CipherValue>dvm8uQ+gAUFtdU0/u+typ9UwspWRfCVVKXkQb9zZ9xaJld1zZ8aZ/HbyOuUjzYH5p9Y6t5uiyYjRW8+PWLDqbZ9PS/1/AF0/LDYdWn6/xP/ZFmM5ICOvjiA7tvyOnUjNonpFlH2H1vSgpZiHMrccz8UlYJKSZ5QpcXZlxWSFGP7vY81zDO/0jQRDNisBaEWF</CipherValue>
+            </CipherData>
+          </EncryptedData>
+        </DTS:ConnectionManager>
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+  </DTS:ConnectionManagers>
+  <DTS:Configurations>
+    <DTS:Configuration
+      DTS:ConfigurationString="C:\Users\JSharpe\source\repos\CreateEDI810s\CreateEDI810s\CreateEDI810s.dtsConfig"
+      DTS:ConfigurationType="1"
+      DTS:CreationName=""
+      DTS:DTSID="{FFF814F4-2F75-49A4-8298-DAB2608B425D}"
+      DTS:ObjectName="Configuration 1" />
+  </DTS:Configurations>
+  <DTS:Variables>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{E24863AB-2C01-42C5-B14A-E75E0E218388}"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="archiveDestPath">
+      <DTS:VariableValue
+        DTS:DataType="8">C:\Users\JSharpe\OneDrive - Swisher International, Inc\Documents\810s\archive\</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{9ED49AC8-73E3-40C0-AF16-1480D1DD8D75}"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="fileNames">
+      <DTS:VariableValue
+        DTS:DataType="8">C:\Users\JSharpe\OneDrive - Swisher International, Inc\Documents\810s</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{E988A6EB-2418-42D2-9091-2279B08DF83B}"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="TranID">
+      <DTS:VariableValue
+        DTS:DataType="5">0.</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{4DB48352-2157-45C3-98A9-35AD03BE58B2}"
+      DTS:IncludeInDebugDump="6789"
+      DTS:Namespace="User"
+      DTS:ObjectName="TranIDs">
+      <DTS:VariableValue
+        DTS:DataSubType="ManagedSerializable"
+        DTS:DataType="13">
+        <SOAP-ENV:Envelope xmlns:clr="http://schemas.microsoft.com/soap/encoding/clr/1.0" xmlns:SOAP-ENC="http://schemas.xmlsoap.org/soap/encoding/" xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+          SOAP-ENV:encodingStyle="http://schemas.xmlsoap.org/soap/encoding/">
+          <SOAP-ENV:Body>
+            <xsd:anyType
+              id="ref-1"></xsd:anyType>
+          </SOAP-ENV:Body>
+        </SOAP-ENV:Envelope>
+      </DTS:VariableValue>
+    </DTS:Variable>
+  </DTS:Variables>
+  <DTS:Executables>
+    <DTS:Executable
+      DTS:refId="Package\Foreach Loop Container"
+      DTS:CreationName="STOCK:FOREACHLOOP"
+      DTS:Description="Foreach Loop Container"
+      DTS:DTSID="{71CBFC16-B391-4F60-A4B1-EE33EA3F7EA6}"
+      DTS:ExecutableType="STOCK:FOREACHLOOP"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Foreach Loop Container">
+      <DTS:ForEachEnumerator
+        DTS:CreationName="Microsoft.ForEachADOEnumerator"
+        DTS:DTSID="{641BFBFB-AC99-49BC-B5C8-77446077779D}"
+        DTS:ObjectName="{641BFBFB-AC99-49BC-B5C8-77446077779D}">
+        <DTS:ObjectData>
+          <FEEADO
+            EnumType="EnumerateRowsInFirstTable"
+            VarName="User::TranIDs" />
+        </DTS:ObjectData>
+      </DTS:ForEachEnumerator>
+      <DTS:Variables />
+      <DTS:Executables>
+        <DTS:Executable
+          DTS:refId="Package\Foreach Loop Container\Data Flow Task"
+          DTS:CreationName="Microsoft.Pipeline"
+          DTS:Description="Data Flow Task"
+          DTS:DTSID="{21A1D063-98CE-4443-9C36-28EF5F27536D}"
+          DTS:ExecutableType="Microsoft.Pipeline"
+          DTS:LocaleID="-1"
+          DTS:ObjectName="Data Flow Task">
+          <DTS:Variables />
+          <DTS:ObjectData>
+            <pipeline
+              version="1">
+              <components>
+                <component
+                  refId="Package\Foreach Loop Container\Data Flow Task\Data Conversion"
+                  componentClassID="Microsoft.DataConvert"
+                  contactInfo="Data Conversion;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;0"
+                  description="Data Conversion"
+                  name="Data Conversion"
+                  usesDispositions="true">
+                  <inputs>
+                    <input
+                      refId="Package\Foreach Loop Container\Data Flow Task\Data Conversion.Inputs[Data Conversion Input]"
+                      name="Data Conversion Input">
+                      <inputColumns>
+                        <inputColumn
+                          refId="Package\Foreach Loop Container\Data Flow Task\Data Conversion.Inputs[Data Conversion Input].Columns[810Line]"
+                          cachedDataType="wstr"
+                          cachedLength="4000"
+                          cachedName="810Line"
+                          lineageId="Package\Foreach Loop Container\Data Flow Task\OLE DB Source.Outputs[OLE DB Source Output].Columns[810Line]" />
+                      </inputColumns>
+                      <externalMetadataColumns />
+                    </input>
+                  </inputs>
+                  <outputs>
+                    <output
+                      refId="Package\Foreach Loop Container\Data Flow Task\Data Conversion.Outputs[Data Conversion Output]"
+                      exclusionGroup="1"
+                      name="Data Conversion Output"
+                      synchronousInputId="Package\Foreach Loop Container\Data Flow Task\Data Conversion.Inputs[Data Conversion Input]">
+                      <outputColumns>
+                        <outputColumn
+                          refId="Package\Foreach Loop Container\Data Flow Task\Data Conversion.Outputs[Data Conversion Output].Columns[Copy of 810Line]"
+                          codePage="1252"
+                          dataType="str"
+                          errorOrTruncationOperation="Conversion"
+                          errorRowDisposition="FailComponent"
+                          length="161"
+                          lineageId="Package\Foreach Loop Container\Data Flow Task\Data Conversion.Outputs[Data Conversion Output].Columns[Copy of 810Line]"
+                          name="Copy of 810Line"
+                          truncationRowDisposition="FailComponent">
+                          <properties>
+                            <property
+                              containsID="true"
+                              dataType="System.Int32"
+                              description="Specifies the input column used as the source of data for the conversion."
+                              name="SourceInputColumnLineageID">#{Package\Foreach Loop Container\Data Flow Task\OLE DB Source.Outputs[OLE DB Source Output].Columns[810Line]}</property>
+                            <property
+                              dataType="System.Boolean"
+                              description="Indicates whether the column uses the faster, locale-neutral parsing routines."
+                              name="FastParse">false</property>
+                          </properties>
+                        </outputColumn>
+                      </outputColumns>
+                      <externalMetadataColumns />
+                    </output>
+                    <output
+                      refId="Package\Foreach Loop Container\Data Flow Task\Data Conversion.Outputs[Data Conversion Error Output]"
+                      exclusionGroup="1"
+                      isErrorOut="true"
+                      name="Data Conversion Error Output"
+                      synchronousInputId="Package\Foreach Loop Container\Data Flow Task\Data Conversion.Inputs[Data Conversion Input]">
+                      <outputColumns>
+                        <outputColumn
+                          refId="Package\Foreach Loop Container\Data Flow Task\Data Conversion.Outputs[Data Conversion Error Output].Columns[ErrorCode]"
+                          dataType="i4"
+                          lineageId="Package\Foreach Loop Container\Data Flow Task\Data Conversion.Outputs[Data Conversion Error Output].Columns[ErrorCode]"
+                          name="ErrorCode"
+                          specialFlags="1" />
+                        <outputColumn
+                          refId="Package\Foreach Loop Container\Data Flow Task\Data Conversion.Outputs[Data Conversion Error Output].Columns[ErrorColumn]"
+                          dataType="i4"
+                          lineageId="Package\Foreach Loop Container\Data Flow Task\Data Conversion.Outputs[Data Conversion Error Output].Columns[ErrorColumn]"
+                          name="ErrorColumn"
+                          specialFlags="2" />
+                      </outputColumns>
+                      <externalMetadataColumns />
+                    </output>
+                  </outputs>
+                </component>
+                <component
+                  refId="Package\Foreach Loop Container\Data Flow Task\Flat File Destination"
+                  componentClassID="Microsoft.FlatFileDestination"
+                  contactInfo="Flat File Destination;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;1"
+                  description="Flat File Destination"
+                  localeId="1033"
+                  name="Flat File Destination">
+                  <properties>
+                    <property
+                      dataType="System.Boolean"
+                      description="Specifies whether the data will overwrite or append to the destination file."
+                      name="Overwrite">true</property>
+                    <property
+                      dataType="System.Null"
+                      description="Specifies the text to write to the destination file before any data is written."
+                      expressionType="Notify"
+                      name="Header" />
+                    <property
+                      dataType="System.Boolean"
+                      description="When text qualifier is enabled, specifies whether the text qualifier in the data written to the destination file will be escaped or not."
+                      name="EscapeQualifier">false</property>
+                  </properties>
+                  <connections>
+                    <connection
+                      refId="Package\Foreach Loop Container\Data Flow Task\Flat File Destination.Connections[FlatFileConnection]"
+                      connectionManagerID="Package.ConnectionManagers[Flat File Connection Manager]"
+                      connectionManagerRefId="Package.ConnectionManagers[Flat File Connection Manager]"
+                      name="FlatFileConnection" />
+                  </connections>
+                  <inputs>
+                    <input
+                      refId="Package\Foreach Loop Container\Data Flow Task\Flat File Destination.Inputs[Flat File Destination Input]"
+                      hasSideEffects="true"
+                      name="Flat File Destination Input">
+                      <inputColumns>
+                        <inputColumn
+                          refId="Package\Foreach Loop Container\Data Flow Task\Flat File Destination.Inputs[Flat File Destination Input].Columns[Copy of 810Line]"
+                          cachedCodepage="1252"
+                          cachedDataType="str"
+                          cachedLength="161"
+                          cachedName="Copy of 810Line"
+                          externalMetadataColumnId="Package\Foreach Loop Container\Data Flow Task\Flat File Destination.Inputs[Flat File Destination Input].ExternalColumns[Column 0]"
+                          lineageId="Package\Foreach Loop Container\Data Flow Task\Data Conversion.Outputs[Data Conversion Output].Columns[Copy of 810Line]" />
+                      </inputColumns>
+                      <externalMetadataColumns
+                        isUsed="True">
+                        <externalMetadataColumn
+                          refId="Package\Foreach Loop Container\Data Flow Task\Flat File Destination.Inputs[Flat File Destination Input].ExternalColumns[Column 0]"
+                          codePage="1252"
+                          dataType="str"
+                          length="255"
+                          name="Column 0" />
+                      </externalMetadataColumns>
+                    </input>
+                  </inputs>
+                </component>
+                <component
+                  refId="Package\Foreach Loop Container\Data Flow Task\OLE DB Source"
+                  componentClassID="Microsoft.OLEDBSource"
+                  contactInfo="OLE DB Source;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;7"
+                  description="OLE DB Source"
+                  name="OLE DB Source"
+                  usesDispositions="true"
+                  version="7">
+                  <properties>
+                    <property
+                      dataType="System.Int32"
+                      description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                      name="CommandTimeout">0</property>
+                    <property
+                      dataType="System.String"
+                      description="Specifies the name of the database object used to open a rowset."
+                      name="OpenRowset"></property>
+                    <property
+                      dataType="System.String"
+                      description="Specifies the variable that contains the name of the database object used to open a rowset."
+                      name="OpenRowsetVariable"></property>
+                    <property
+                      dataType="System.String"
+                      description="The SQL command to be executed."
+                      name="SqlCommand"
+                      UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor, Microsoft.DataTransformationServices.Controls, Version=15.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91">select '*****' + ISNULL(c.PARTNER_ID_0, 'UNKNO') + SPACE(160 - (5 + LEN(ISNULL(c.PARTNER_ID_0, 'UNKNO')))) + CHAR(10) as [810Line], 
+	LEN('*****' + ISNULL(c.PARTNER_ID_0, 'UNKNO') + SPACE(160 - (5 + LEN(ISNULL(c.PARTNER_ID_0, 'UNKNO')))) + CHAR(10)) as LineLength,
+	.1 as [rownum],
+	0 as rectype
+	from TRANSACTIONS t inner join CUSTOMERS c on t.ENTITY_ID = c.CUSTOMER_ID
+	inner join ORDER_TYPE ot on ot.ORDER_TYPE_ID = t.ORDER_TYPE_ID
+	where t.TRANSACTION_ID = ?
+UNION ALL
+select 'H00' + CASE WHEN LEN(ISNULL(c.PARTNER_ID_0,'')) &lt; 12 THEN ISNULL(c.PARTNER_ID_0,'') + SPACE(12 - LEN(ISNULL(c.PARTNER_ID_0,''))) ELSE SUBSTRING(ISNULL(c.PARTNER_ID_0,''), 1, 12) END + 
+	CASE WHEN LEN(t.TRANID) &lt; 10 THEN t.TRANID + SPACE(10 - LEN(t.TRANID)) ELSE SUBSTRING(t.TRANID, 1, 10) END +
+	CONVERT(varchar, t.TRANDATE, 112) +
+	CASE WHEN LEN(ISNULL(t.RELATED_TRANID,'')) &lt; 22 THEN ISNULL(t.RELATED_TRANID,'') + SPACE(22 - LEN(ISNULL(t.RELATED_TRANID,''))) ELSE SUBSTRING(ISNULL(t.RELATED_TRANID,''), 1, 22) END +
+	CONVERT(varchar, t.PO_DATE, 112) +
+	SPACE(2) +
+	CASE WHEN t.CREATED_FROM_ID IS NULL THEN 'DR' ELSE 'DI' END +
+	SPACE(93) + CHAR(10) as [810Line], 
+	LEN('H00' + CASE WHEN LEN(ISNULL(c.PARTNER_ID_0,'')) &lt; 12 THEN ISNULL(c.PARTNER_ID_0,'') + SPACE(12 - LEN(ISNULL(c.PARTNER_ID_0,''))) ELSE SUBSTRING(ISNULL(c.PARTNER_ID_0,''), 1, 12) END + 
+	CASE WHEN LEN(t.TRANID) &lt; 10 THEN t.TRANID + SPACE(10 - LEN(t.TRANID)) ELSE SUBSTRING(t.TRANID, 1, 10) END +
+	CONVERT(varchar, t.TRANDATE, 112) +
+	CASE WHEN LEN(ISNULL(t.RELATED_TRANID,'')) &lt; 22 THEN ISNULL(t.RELATED_TRANID,'') + SPACE(22 - LEN(ISNULL(t.RELATED_TRANID,''))) ELSE SUBSTRING(ISNULL(t.RELATED_TRANID,''), 1, 22) END +
+	CONVERT(varchar, t.PO_DATE, 112) +
+	SPACE(2) +
+	CASE WHEN t.CREATED_FROM_ID IS NULL THEN 'DR' ELSE 'DI' END +
+	SPACE(93) + CHAR(10)) as LineLength,
+	.2 as [rownum],
+	1 as rectype
+	from TRANSACTIONS t inner join CUSTOMERS c on t.ENTITY_ID = c.CUSTOMER_ID
+	left outer join PAYMENT_TERMS pt on t.PAYMENT_TERMS_ID = pt.PAYMENT_TERMS_ID
+	where t.TRANSACTION_ID = ?
+UNION ALL
+select 'H05IA143074640' + SPACE(146) + CHAR(10) as [810Line], 
+	LEN('H05IA143074640' + SPACE(146) + CHAR(10)) as LineLength,
+	.3 as [rownum],
+	2 as rectype
+	from TRANSACTIONS t inner join CUSTOMERS c on t.ENTITY_ID = c.CUSTOMER_ID
+	where t.TRANSACTION_ID = ? and c.PARTNER_ID_0 = 'SAMS'
+UNION ALL
+select 'H05DP00017' + SPACE(150) + CHAR(10) as [810Line], 
+	LEN('H05DP00017' + SPACE(150) + CHAR(10)) as LineLength,
+	.4 as [rownum],
+	3 as rectype
+	from TRANSACTIONS t inner join CUSTOMERS c on t.ENTITY_ID = c.CUSTOMER_ID
+	where t.TRANSACTION_ID = ? and c.PARTNER_ID_0 = 'SAMS'
+UNION ALL
+select 'H05MR0020' + SPACE(151) + CHAR(10) as [810Line], 
+	LEN('H05MR0020' + SPACE(151) + CHAR(10)) as LineLength,
+	.5 as [rownum],
+	4 as rectype
+	from TRANSACTIONS t inner join CUSTOMERS c on t.ENTITY_ID = c.CUSTOMER_ID
+	where t.TRANSACTION_ID = ? and c.PARTNER_ID_0 = 'SAMS'
+UNION ALL
+select 'H05BM' + CASE WHEN LEN(t.TRANID) &lt; 30 THEN t.TRANID + SPACE(30 - LEN(t.TRANID)) ELSE SUBSTRING(t.TRANID, 1, 30) END +
+	CASE WHEN LEN(c.PARTNER_ID_0) &lt; 80 THEN c.PARTNER_ID_0 + SPACE(80 - LEN(c.PARTNER_ID_0)) ELSE SUBSTRING(c.PARTNER_ID_0, 1, 80) END + SPACE(45) + CHAR(10) as [810Line], 
+	LEN('H05BM' + CASE WHEN LEN(t.TRANID) &lt; 30 THEN t.TRANID + SPACE(30 - LEN(t.TRANID)) ELSE SUBSTRING(t.TRANID, 1, 30) END +
+	CASE WHEN LEN(c.PARTNER_ID_0) &lt; 80 THEN c.PARTNER_ID_0 + SPACE(80 - LEN(c.PARTNER_ID_0)) ELSE SUBSTRING(c.PARTNER_ID_0, 1, 80) END + SPACE(45) + CHAR(10)) as LineLength,
+	.6 as [rownum],
+	5 as rectype
+	from TRANSACTIONS t inner join CUSTOMERS c on t.ENTITY_ID = c.CUSTOMER_ID
+	where t.TRANSACTION_ID = ? and c.PARTNER_ID_0 &lt;&gt; 'SAMS'
+UNION ALL
+select 'H05FW' + CASE WHEN LEN(ISNULL(cl.LICENSE_NAME, '')) &lt; 30 THEN ISNULL(cl.LICENSE_NAME, '') + SPACE(30 - LEN(ISNULL(cl.LICENSE_NAME, ''))) ELSE SUBSTRING(ISNULL(cl.LICENSE_NAME, ''), 1, 30) END +
+	'Vends' + CASE WHEN LEN(ISNULL(c.STATE, SPACE(2))) &gt; 2 THEN SUBSTRING(ISNULL(c.STATE, SPACE(2)), 1, 2) ELSE ISNULL(c.STATE, SPACE(2)) END  + 'Lic:' + CASE WHEN LEN(ISNULL(cl.LICENSE_NAME, '')) &lt; 80 THEN ISNULL(cl.LICENSE_NAME, '') + SPACE(80 - LEN(ISNULL(cl.LICENSE_NAME, ''))) ELSE SUBSTRING(ISNULL(cl.LICENSE_NAME, ''), 1, 80) END +
+	SPACE(34) + CHAR(10) as [810Line], 
+	LEN('H05FW' + CASE WHEN LEN(ISNULL(cl.LICENSE_NAME, '')) &lt; 30 THEN ISNULL(cl.LICENSE_NAME, '') + SPACE(30 - LEN(ISNULL(cl.LICENSE_NAME, ''))) ELSE SUBSTRING(ISNULL(cl.LICENSE_NAME, ''), 1, 30) END +
+	'Vends' + CASE WHEN LEN(ISNULL(c.STATE, SPACE(2))) &gt; 2 THEN SUBSTRING(ISNULL(c.STATE, SPACE(2)), 1, 2) ELSE ISNULL(c.STATE, SPACE(2)) END  + 'Lic:' + CASE WHEN LEN(ISNULL(cl.LICENSE_NAME, '')) &lt; 80 THEN ISNULL(cl.LICENSE_NAME, '') + SPACE(80 - LEN(ISNULL(cl.LICENSE_NAME, ''))) ELSE SUBSTRING(ISNULL(cl.LICENSE_NAME, ''), 1, 80) END +
+	SPACE(34) + CHAR(10)) as LineLength,
+	.7 as [rownum],
+	6 as rectype
+	from TRANSACTIONS t inner join CUSTOMERS c on t.ENTITY_ID = c.CUSTOMER_ID
+	inner join CUSTOMER_LICENSING cl on cl.CUSTOMER_ID = c.CUSTOMER_ID
+	where t.TRANSACTION_ID = ? and c.PARTNER_ID_0 &lt;&gt; 'SAMS' and c.PARTNER_ID_0 &lt;&gt; 'KROGER'  and c.PARTNER_ID_0 &lt;&gt; 'FARNER'
+UNION ALL
+select A.[810Line], A.LineLength, A.rownum, A.rectype from
+(select 'H10' + CASE WHEN LEN(ISNULL(a.N1_ID_EDI_ADDRESS_TYPE_OLD,'')) &lt; 2 THEN ISNULL(a.N1_ID_EDI_ADDRESS_TYPE_OLD,'') + SPACE(2 - LEN(ISNULL(a.N1_ID_EDI_ADDRESS_TYPE_OLD,''))) ELSE SUBSTRING(ISNULL(a.N1_ID_EDI_ADDRESS_TYPE_OLD,''), 1, 2) END +
+	CASE WHEN LEN(ISNULL(a.N1_NAME_EDI_ADDRESS_CUSTOMER_,'')) &lt; 35 THEN ISNULL(a.N1_NAME_EDI_ADDRESS_CUSTOMER_,'') + SPACE(35 - LEN(ISNULL(a.N1_NAME_EDI_ADDRESS_CUSTOMER_,''))) ELSE SUBSTRING(ISNULL(a.N1_NAME_EDI_ADDRESS_CUSTOMER_,''), 1, 35) END +
+	CASE WHEN LEN(ISNULL(a.N1_QUALIFIER_EDI_DUNS_STRUCTU,'')) &lt; 2 THEN ISNULL(a.N1_QUALIFIER_EDI_DUNS_STRUCTU,'') + SPACE(2 - LEN(ISNULL(a.N1_QUALIFIER_EDI_DUNS_STRUCTU,''))) ELSE SUBSTRING(ISNULL(a.N1_QUALIFIER_EDI_DUNS_STRUCTU,''), 1, 2) END +
+	CASE WHEN LEN(ISNULL(a.N1_DUNS_EDI_ADDRESS_DUNS,'')) &lt; 17 THEN ISNULL(a.N1_DUNS_EDI_ADDRESS_DUNS,'') + SPACE(17 - LEN(ISNULL(a.N1_DUNS_EDI_ADDRESS_DUNS,''))) ELSE SUBSTRING(ISNULL(a.N1_DUNS_EDI_ADDRESS_DUNS,''), 1, 17) END +
+	SPACE(101) + CHAR(10) as [810Line],
+	ROW_NUMBER() OVER (ORDER BY a.N1_ID_EDI_ADDRESS_TYPE_OLD) as [rownum], 
+	LEN('H10' + CASE WHEN LEN(ISNULL(a.N1_ID_EDI_ADDRESS_TYPE_OLD,'')) &lt; 2 THEN ISNULL(a.N1_ID_EDI_ADDRESS_TYPE_OLD,'') + SPACE(2 - LEN(ISNULL(a.N1_ID_EDI_ADDRESS_TYPE_OLD,''))) ELSE SUBSTRING(ISNULL(a.N1_ID_EDI_ADDRESS_TYPE_OLD,''), 1, 2) END +
+	CASE WHEN LEN(ISNULL(a.N1_NAME_EDI_ADDRESS_CUSTOMER_,'')) &lt; 35 THEN ISNULL(a.N1_NAME_EDI_ADDRESS_CUSTOMER_,'') + SPACE(35 - LEN(ISNULL(a.N1_NAME_EDI_ADDRESS_CUSTOMER_,''))) ELSE SUBSTRING(ISNULL(a.N1_NAME_EDI_ADDRESS_CUSTOMER_,''), 1, 35) END +
+	CASE WHEN LEN(ISNULL(a.N1_QUALIFIER_EDI_DUNS_STRUCTU,'')) &lt; 2 THEN ISNULL(a.N1_QUALIFIER_EDI_DUNS_STRUCTU,'') + SPACE(2 - LEN(ISNULL(a.N1_QUALIFIER_EDI_DUNS_STRUCTU,''))) ELSE SUBSTRING(ISNULL(a.N1_QUALIFIER_EDI_DUNS_STRUCTU,''), 1, 2) END +
+	CASE WHEN LEN(ISNULL(a.N1_DUNS_EDI_ADDRESS_DUNS,'')) &lt; 17 THEN ISNULL(a.N1_DUNS_EDI_ADDRESS_DUNS,'') + SPACE(17 - LEN(ISNULL(a.N1_DUNS_EDI_ADDRESS_DUNS,''))) ELSE SUBSTRING(ISNULL(a.N1_DUNS_EDI_ADDRESS_DUNS,''), 1, 17) END +
+	SPACE(101) + CHAR(10)) as LineLength,
+	7 as rectype
+	from TRANSACTIONS t inner join CUSTOMERS c on t.ENTITY_ID = c.CUSTOMER_ID
+	inner join ADDRESS_BOOK ab on ab.ENTITY_ID = c.CUSTOMER_ID
+	inner join ADDRESSES a on a.ADDRESS_ID = ab.ADDRESS_ID
+	where t.TRANSACTION_ID = ? and a.INCLUDE_ADDRESS_IN_EDI_810_TR = 'T'
+UNION ALL
+select 'H15' + 
+	CASE WHEN a.N1_ID_EDI_ADDRESS_TYPE_OLD = 'VN' OR a.N1_ID_EDI_ADDRESS_TYPE_OLD = 'RT' OR a.N1_ID_EDI_ADDRESS_TYPE_OLD = 'RE' OR a.N1_ID_EDI_ADDRESS_TYPE_OLD = 'SU' or a.N1_ID_EDI_ADDRESS_TYPE_OLD = 'SF' or a.N1_ID_EDI_ADDRESS_TYPE_OLD = 'RI' THEN 'PO BOX 2230' + SPACE(24) ELSE
+		CASE WHEN a.ADDRESS_LINE_1 is null THEN SPACE(35) ELSE 
+			CASE WHEN LEN(a.ADDRESS_LINE_1) &lt; 35 THEN a.ADDRESS_LINE_1 + SPACE(35 - LEN(a.ADDRESS_LINE_1)) ELSE SUBSTRING(a.ADDRESS_LINE_1, 1, 35) END
+		END
+	END +
+	CASE WHEN a.ADDRESS_LINE_2 is null THEN SPACE(35) ELSE 
+		CASE WHEN LEN(a.ADDRESS_LINE_2) &lt; 35 THEN a.ADDRESS_LINE_2 + SPACE(35 - LEN(a.ADDRESS_LINE_2)) ELSE SUBSTRING(a.ADDRESS_LINE_2, 1, 35) END 
+	END +
+	SPACE(87) + CHAR(10) as [810Line],
+	ROW_NUMBER() OVER (ORDER BY a.N1_ID_EDI_ADDRESS_TYPE_OLD) as [rownum],
+	LEN('H15' + 
+	CASE WHEN a.N1_ID_EDI_ADDRESS_TYPE_OLD = 'VN' OR a.N1_ID_EDI_ADDRESS_TYPE_OLD = 'RT' OR a.N1_ID_EDI_ADDRESS_TYPE_OLD = 'RE' OR a.N1_ID_EDI_ADDRESS_TYPE_OLD = 'SU' or a.N1_ID_EDI_ADDRESS_TYPE_OLD = 'SF' or a.N1_ID_EDI_ADDRESS_TYPE_OLD = 'RI' THEN 'PO BOX 2230' + SPACE(24) ELSE
+		CASE WHEN a.ADDRESS_LINE_1 is null THEN SPACE(35) ELSE 
+			CASE WHEN LEN(a.ADDRESS_LINE_1) &lt; 35 THEN a.ADDRESS_LINE_1 + SPACE(35 - LEN(a.ADDRESS_LINE_1)) ELSE SUBSTRING(a.ADDRESS_LINE_1, 1, 35) END
+		END
+	END +
+	CASE WHEN a.ADDRESS_LINE_2 is null THEN SPACE(35) ELSE 
+		CASE WHEN LEN(a.ADDRESS_LINE_2) &lt; 35 THEN a.ADDRESS_LINE_2 + SPACE(35 - LEN(a.ADDRESS_LINE_2)) ELSE SUBSTRING(a.ADDRESS_LINE_2, 1, 35) END 
+	END +
+	SPACE(87) + CHAR(10)) as LineLength,
+	8 as rectype
+	from TRANSACTIONS t inner join CUSTOMERS c on t.ENTITY_ID = c.CUSTOMER_ID
+	inner join ADDRESS_BOOK ab on ab.ENTITY_ID = c.CUSTOMER_ID
+	inner join ADDRESSES a on a.ADDRESS_ID = ab.ADDRESS_ID
+	where t.TRANSACTION_ID = ? and a.INCLUDE_ADDRESS_IN_EDI_810_TR = 'T' 
+UNION ALL
+select 'H20' + 
+	CASE WHEN a.N1_ID_EDI_ADDRESS_TYPE_OLD = 'VN' OR a.N1_ID_EDI_ADDRESS_TYPE_OLD = 'RT' OR a.N1_ID_EDI_ADDRESS_TYPE_OLD = 'RE' OR a.N1_ID_EDI_ADDRESS_TYPE_OLD = 'SU' or a.N1_ID_EDI_ADDRESS_TYPE_OLD = 'SF' or a.N1_ID_EDI_ADDRESS_TYPE_OLD = 'RI' THEN 'JACKSONVILLE' + SPACE(18) ELSE
+		CASE WHEN a.CITY is null THEN SPACE(30) ELSE 
+			CASE WHEN LEN(a.CITY) &lt; 30 THEN a.CITY + SPACE(30 - LEN(a.CITY)) ELSE SUBSTRING(a.CITY, 1, 30) END
+		END
+	END +
+	CASE WHEN a.N1_ID_EDI_ADDRESS_TYPE_OLD = 'VN' OR a.N1_ID_EDI_ADDRESS_TYPE_OLD = 'RT' OR a.N1_ID_EDI_ADDRESS_TYPE_OLD = 'RE' OR a.N1_ID_EDI_ADDRESS_TYPE_OLD = 'SU' or a.N1_ID_EDI_ADDRESS_TYPE_OLD = 'SF' or a.N1_ID_EDI_ADDRESS_TYPE_OLD = 'RI' THEN 'FL' ELSE
+		CASE WHEN a.STATE is null THEN SPACE(2) ELSE 
+			CASE WHEN LEN(a.STATE) &lt; 2 THEN a.STATE + SPACE(2 - LEN(a.STATE)) ELSE SUBSTRING(a.STATE, 1, 2) END
+		END
+	END +
+	CASE WHEN a.N1_ID_EDI_ADDRESS_TYPE_OLD = 'VN' OR a.N1_ID_EDI_ADDRESS_TYPE_OLD = 'RT' OR a.N1_ID_EDI_ADDRESS_TYPE_OLD = 'RE' OR a.N1_ID_EDI_ADDRESS_TYPE_OLD = 'SU' or a.N1_ID_EDI_ADDRESS_TYPE_OLD = 'SF' or a.N1_ID_EDI_ADDRESS_TYPE_OLD = 'RI' THEN '32203    ' ELSE
+		CASE WHEN a.ZIP is null THEN SPACE(9) ELSE 
+			CASE WHEN LEN(a.ZIP) &lt; 9 THEN a.ZIP + SPACE(9 - LEN(a.ZIP)) ELSE SUBSTRING(a.ZIP, 1, 9) END
+		END
+	END +
+	SPACE(116) + CHAR(10) as [810Line],
+	ROW_NUMBER() OVER (ORDER BY a.N1_ID_EDI_ADDRESS_TYPE_OLD) as [rownum],
+	LEN('H20' + 
+	CASE WHEN a.N1_ID_EDI_ADDRESS_TYPE_OLD = 'VN' OR a.N1_ID_EDI_ADDRESS_TYPE_OLD = 'RT' OR a.N1_ID_EDI_ADDRESS_TYPE_OLD = 'RE' OR a.N1_ID_EDI_ADDRESS_TYPE_OLD = 'SU' or a.N1_ID_EDI_ADDRESS_TYPE_OLD = 'SF' or a.N1_ID_EDI_ADDRESS_TYPE_OLD = 'RI' THEN 'JACKSONVILLE' + SPACE(18) ELSE
+		CASE WHEN a.CITY is null THEN SPACE(30) ELSE 
+			CASE WHEN LEN(a.CITY) &lt; 30 THEN a.CITY + SPACE(30 - LEN(a.CITY)) ELSE SUBSTRING(a.CITY, 1, 30) END
+		END
+	END +
+	CASE WHEN a.N1_ID_EDI_ADDRESS_TYPE_OLD = 'VN' OR a.N1_ID_EDI_ADDRESS_TYPE_OLD = 'RT' OR a.N1_ID_EDI_ADDRESS_TYPE_OLD = 'RE' OR a.N1_ID_EDI_ADDRESS_TYPE_OLD = 'SU' or a.N1_ID_EDI_ADDRESS_TYPE_OLD = 'SF' or a.N1_ID_EDI_ADDRESS_TYPE_OLD = 'RI' THEN 'FL' ELSE
+		CASE WHEN a.STATE is null THEN SPACE(2) ELSE 
+			CASE WHEN LEN(a.STATE) &lt; 2 THEN a.STATE + SPACE(2 - LEN(a.STATE)) ELSE SUBSTRING(a.STATE, 1, 2) END
+		END
+	END +
+	CASE WHEN a.N1_ID_EDI_ADDRESS_TYPE_OLD = 'VN' OR a.N1_ID_EDI_ADDRESS_TYPE_OLD = 'RT' OR a.N1_ID_EDI_ADDRESS_TYPE_OLD = 'RE' OR a.N1_ID_EDI_ADDRESS_TYPE_OLD = 'SU' or a.N1_ID_EDI_ADDRESS_TYPE_OLD = 'SF' or a.N1_ID_EDI_ADDRESS_TYPE_OLD = 'RI' THEN '32203    ' ELSE
+		CASE WHEN a.ZIP is null THEN SPACE(9) ELSE 
+			CASE WHEN LEN(a.ZIP) &lt; 9 THEN a.ZIP + SPACE(9 - LEN(a.ZIP)) ELSE SUBSTRING(a.ZIP, 1, 9) END
+		END
+	END +
+	SPACE(116) + CHAR(10)) as LineLength,
+	9 as rectype
+	from TRANSACTIONS t inner join CUSTOMERS c on t.ENTITY_ID = c.CUSTOMER_ID
+	inner join ADDRESS_BOOK ab on ab.ENTITY_ID = c.CUSTOMER_ID
+	inner join ADDRESSES a on a.ADDRESS_ID = ab.ADDRESS_ID
+	where t.TRANSACTION_ID = ? and a.INCLUDE_ADDRESS_IN_EDI_810_TR = 'T') A
+UNION ALL
+select distinct 'H25013 ' +
+	  CASE WHEN LEN(ISNULL(CAST(t.INVOICE_AMOUNT_PERCENT*-1 as varchar(6)),'0')) &lt; 6 
+		THEN ISNULL(CAST(t.INVOICE_AMOUNT_PERCENT*-1 as varchar(6)),'0') + SPACE(6 - LEN(ISNULL(CAST(t.INVOICE_AMOUNT_PERCENT*-1 as varchar(6)),'0'))) 
+		ELSE SUBSTRING(ISNULL(CAST(t.INVOICE_AMOUNT_PERCENT*-1 as varchar(6)),'0'), 1, 6) 
+	  END +
+	  CONVERT(varchar, t.TRANDATE + t.NO__OF_DUE_DAYS, 112) +
+	  CASE WHEN LEN(ISNULL(CAST(t.NO__OF_DUE_DAYS as varchar(3)),CHAR(0))) &lt; 3 THEN ISNULL(CAST(t.NO__OF_DUE_DAYS as varchar(3)),CHAR(0)) + SPACE(3 - LEN(ISNULL(CAST(t.NO__OF_DUE_DAYS as varchar(3)),CHAR(0)))) ELSE SUBSTRING(ISNULL(CAST(t.NO__OF_DUE_DAYS as varchar(3)),CHAR(0)), 1, 3) END +
+	  CONVERT(varchar, t.TRANDATE + t.NO__OF_DUE_DAYS, 112) +
+	  CASE WHEN LEN(CAST(t.NO__OF_DUE_DAYS as varchar(3))) &lt; 3 THEN CAST(t.NO__OF_DUE_DAYS as varchar(3)) + SPACE(3 - LEN(CAST(t.NO__OF_DUE_DAYS as varchar(3)))) ELSE CAST(t.NO__OF_DUE_DAYS as varchar(3)) END +
+	  CASE WHEN LEN(CAST(CAST(CASE WHEN (select DISCOUNT_ITEM from vw_EDI_810 where transaction_id =?) is not null THEN CAST((select DISCOUNT_ITEM from vw_EDI_810 where transaction_id =?) as DECIMAL(8,2)) ELSE '0000.0000 ' END as NUMERIC(10,4)) as varchar(10))) &lt; 10 
+			THEN CAST(CAST(CASE WHEN (select DISCOUNT_ITEM from vw_EDI_810 where transaction_id =?) is not null THEN CAST((select DISCOUNT_ITEM from vw_EDI_810 where transaction_id =?) as DECIMAL(8,2)) ELSE '0000.0000 ' END as NUMERIC(10,4)) as varchar(10)) + 
+			SPACE(10 - LEN(CAST(CAST(CASE WHEN (select DISCOUNT_ITEM from vw_EDI_810 where transaction_id =?) is not null THEN CAST((select DISCOUNT_ITEM from vw_EDI_810 where transaction_id =?) as DECIMAL(8,2)) ELSE '0000.0000 ' END as NUMERIC(10,4)) as varchar(10))))
+			ELSE CAST(CAST(CASE WHEN (select DISCOUNT_ITEM from vw_EDI_810 where transaction_id =?) is not null THEN CAST((select DISCOUNT_ITEM from vw_EDI_810 where transaction_id =?) as DECIMAL(8,2)) ELSE '0000.0000 ' END as NUMERIC(10,4)) as varchar(10)) 
+	  END +
+	  SPACE(8) +
+	  CASE WHEN LEN(CAST(CAST((select max(amount) from TRANSACTION_LINES tl where tl.TRANSACTION_ID = t.TRANSACTION_ID) as NUMERIC(10,2)) as varchar)) &lt; 10 
+			THEN CAST(CAST((select max(amount) from TRANSACTION_LINES tl where tl.TRANSACTION_ID = t.TRANSACTION_ID) as NUMERIC(10,2)) as varchar) + SPACE(10 - LEN(CAST(CAST((select max(amount) from TRANSACTION_LINES tl where tl.TRANSACTION_ID = t.TRANSACTION_ID) as NUMERIC(10,2)) as varchar))) 
+			ELSE SUBSTRING(CAST(CAST((select max(amount) from TRANSACTION_LINES tl where tl.TRANSACTION_ID = t.TRANSACTION_ID) as NUMERIC(10,2)) as varchar), 1, 10) 
+	  END +
+	  SPACE(5) +
+	  CASE WHEN LEN(pt.name) &lt; 30 THEN pt.NAME + SPACE(30 - LEN(pt.NAME)) ELSE SPACE(30) END +
+	  CASE WHEN c.MSA_DISCOUNT_ELIGIBLE = 'T' 
+			THEN CAST((select MSA_Discount from vw_EDI_810 where transaction_id = ?) as varchar(10)) + ' MSA DISCOUNT' + SPACE(50 - LEN(CAST((select MSA_Discount from vw_EDI_810 where transaction_id = ?) as varchar(10)) + ' MSA DISCOUNT'))
+			ELSE SPACE(50)
+	  END + 
+	  SPACE(12) + CHAR(10) as [810Line],
+	  LEN('H25013 ' +
+	  CASE WHEN LEN(ISNULL(CAST(t.INVOICE_AMOUNT_PERCENT*-1 as varchar(6)),'0')) &lt; 6 
+		THEN ISNULL(CAST(t.INVOICE_AMOUNT_PERCENT*-1 as varchar(6)),'0') + SPACE(6 - LEN(ISNULL(CAST(t.INVOICE_AMOUNT_PERCENT*-1 as varchar(6)),'0'))) 
+		ELSE SUBSTRING(ISNULL(CAST(t.INVOICE_AMOUNT_PERCENT*-1 as varchar(6)),'0'), 1, 6) 
+	  END +
+	  CONVERT(varchar, t.TRANDATE + t.NO__OF_DUE_DAYS, 112) +
+	  CASE WHEN LEN(ISNULL(CAST(t.NO__OF_DUE_DAYS as varchar(3)),CHAR(0))) &lt; 3 THEN ISNULL(CAST(t.NO__OF_DUE_DAYS as varchar(3)),CHAR(0)) + SPACE(3 - LEN(ISNULL(CAST(t.NO__OF_DUE_DAYS as varchar(3)),CHAR(0)))) ELSE SUBSTRING(ISNULL(CAST(t.NO__OF_DUE_DAYS as varchar(3)),CHAR(0)), 1, 3) END +
+	  CONVERT(varchar, t.TRANDATE + t.NO__OF_DUE_DAYS, 112) +
+	  CASE WHEN LEN(CAST(t.NO__OF_DUE_DAYS as varchar(3))) &lt; 3 THEN CAST(t.NO__OF_DUE_DAYS as varchar(3)) + SPACE(3 - LEN(CAST(t.NO__OF_DUE_DAYS as varchar(3)))) ELSE CAST(t.NO__OF_DUE_DAYS as varchar(3)) END +
+	  CASE WHEN LEN(CAST(CAST(CASE WHEN (select DISCOUNT_ITEM from vw_EDI_810 where transaction_id =?) is not null THEN CAST((select DISCOUNT_ITEM from vw_EDI_810 where transaction_id =?) as DECIMAL(8,2)) ELSE '0000.0000 ' END as NUMERIC(10,4)) as varchar(10))) &lt; 10 
+			THEN CAST(CAST(CASE WHEN (select DISCOUNT_ITEM from vw_EDI_810 where transaction_id =?) is not null THEN CAST((select DISCOUNT_ITEM from vw_EDI_810 where transaction_id =?) as DECIMAL(8,2)) ELSE '0000.0000 ' END as NUMERIC(10,4)) as varchar(10)) + 
+			SPACE(10 - LEN(CAST(CAST(CASE WHEN (select DISCOUNT_ITEM from vw_EDI_810 where transaction_id =?) is not null THEN CAST((select DISCOUNT_ITEM from vw_EDI_810 where transaction_id =?) as DECIMAL(8,2)) ELSE '0000.0000 ' END as NUMERIC(10,4)) as varchar(10))))
+			ELSE CAST(CAST(CASE WHEN (select DISCOUNT_ITEM from vw_EDI_810 where transaction_id =?) is not null THEN CAST((select DISCOUNT_ITEM from vw_EDI_810 where transaction_id =?) as DECIMAL(8,2)) ELSE '0000.0000 ' END as NUMERIC(10,4)) as varchar(10)) 
+	  END +
+	  SPACE(8) +
+	  CASE WHEN LEN(CAST(CAST((select max(amount) from TRANSACTION_LINES tl where tl.TRANSACTION_ID = t.TRANSACTION_ID) as NUMERIC(10,2)) as varchar)) &lt; 10 
+			THEN CAST(CAST((select max(amount) from TRANSACTION_LINES tl where tl.TRANSACTION_ID = t.TRANSACTION_ID) as NUMERIC(10,2)) as varchar) + SPACE(10 - LEN(CAST(CAST((select max(amount) from TRANSACTION_LINES tl where tl.TRANSACTION_ID = t.TRANSACTION_ID) as NUMERIC(10,2)) as varchar))) 
+			ELSE SUBSTRING(CAST(CAST((select max(amount) from TRANSACTION_LINES tl where tl.TRANSACTION_ID = t.TRANSACTION_ID) as NUMERIC(10,2)) as varchar), 1, 10) 
+	  END +
+	  SPACE(5) +
+	  CASE WHEN LEN(pt.name) &lt; 30 THEN pt.NAME + SPACE(30 - LEN(pt.NAME)) ELSE SPACE(30) END +
+	  CASE WHEN c.MSA_DISCOUNT_ELIGIBLE = 'T' 
+			THEN CAST((select MSA_Discount from vw_EDI_810 where transaction_id = ?) as varchar(10)) + ' MSA DISCOUNT' + SPACE(50 - LEN(CAST((select MSA_Discount from vw_EDI_810 where transaction_id = ?) as varchar(10)) + ' MSA DISCOUNT'))
+			ELSE SPACE (50)
+	  END + 
+	  SPACE(12) + CHAR(10)) as LineLength,
+	  100 as [rownum],
+	  10 as rectype
+	from TRANSACTIONs t 
+	inner join CUSTOMERS c on t.ENTITY_ID = c.CUSTOMER_ID
+	inner join PAYMENT_TERMS pt on t.PAYMENT_TERMS_ID = pt.PAYMENT_TERMS_ID
+	where t.TRANSACTION_ID = ?
+UNION
+select 'H30011' + CONVERT(varchar, t.TRANDATE, 112) + SPACE(146) + CHAR(10) as [810Line],
+	DATALENGTH('H30011' + CONVERT(varchar, t.TRANDATE, 112) + SPACE(146) + CHAR(10)) as LineLength,
+	200 as [rownum],
+	11 as rectype
+	from TRANSACTIONs t 
+	where t.TRANSACTION_ID = ?
+UNION
+select 
+	CASE WHEN 
+	(select count(*) from
+	(select 'H35' + CASE WHEN sv.SHIP_VIA_2_NAME = 'Cash Sale Pick Up' or sv.SHIP_VIA_2_NAME = 'Customer Pick' THEN 'PB' ELSE 'PP' END +
+		'ORORIGIN' + SPACE(147) + CHAR(10) as [810Line]
+		from TRANSACTIONs t 
+		inner join SHIP_VIA_2 sv on t.SHIP_VIA_ID = sv.SHIP_VIA_2_ID
+		where t.TRANSACTION_ID = ?) as A) = 0
+	THEN 'H35PPORORIGIN' + SPACE(147) + CHAR(10) 
+	ELSE (select 'H35' + CASE WHEN sv.SHIP_VIA_2_NAME = 'Cash Sale Pick Up' or sv.SHIP_VIA_2_NAME = 'Customer Pick' THEN 'PB' ELSE 'PP' END +
+		'ORORIGIN' + SPACE(147) + CHAR(10) as [810Line]
+		from TRANSACTIONs t 
+		inner join SHIP_VIA_2 sv on t.SHIP_VIA_ID = sv.SHIP_VIA_2_ID
+		where t.TRANSACTION_ID = ?)
+	END as [810Line],
+	LEN(SPACE(161)) as LineLength,
+	300 as [rownum],
+	12 as rectype
+UNION
+select LineItems.[810Line], LineItems.LineLength, LineItems.rownum, LineItems.rectype from
+(select 'D00' + CASE WHEN LEN(t.TRANID) &lt; 10 THEN t.TRANID + SPACE(10 - LEN(t.TRANID)) ELSE SUBSTRING(t.TRANID, 1, 10) END +
+	CASE WHEN LEN(CAST((ROW_NUMBER() OVER (ORDER BY tl.TRANSACTION_ORDER)) as varchar(10))) &lt; 10 THEN CAST((ROW_NUMBER() OVER (ORDER BY tl.TRANSACTION_ORDER)) as varchar(10)) + SPACE(10 - LEN(CAST((ROW_NUMBER() OVER (ORDER BY tl.TRANSACTION_ORDER)) as varchar(10)))) ELSE CAST((ROW_NUMBER() OVER (ORDER BY tl.TRANSACTION_ORDER)) as varchar(10)) END +
+	CASE WHEN LEN(CAST((ISNULL(CASE WHEN vw.INVOICE_QTY = 0 THEN 0 ELSE vw.INVOICE_QTY END, 0)) as varchar(10))) &lt; 10 
+		THEN CAST((ISNULL(CASE WHEN vw.INVOICE_QTY = 0 THEN 0 ELSE vw.INVOICE_QTY END, 0)) as varchar(10)) + SPACE(10 - LEN(CAST((ISNULL(CASE WHEN vw.INVOICE_QTY = 0 THEN 0 ELSE vw.INVOICE_QTY END, 0)) as varchar(10)))) 
+		ELSE CAST((ISNULL(CASE WHEN vw.INVOICE_QTY = 0 THEN 0 ELSE vw.INVOICE_QTY END, 0)) as varchar(10)) 
+	END +
+	CASE WHEN UOM.NAME &lt;&gt; 'Display' 
+	THEN
+		CASE WHEN UOM.NAME = 'Case' or UOM.NAME = 'Cs' THEN 'CA' ELSE IIF(UOM.NAME = 'Each', 'EA', SUBSTRING(UOM.NAME, 1, 2)) END
+	ELSE 'DS' 
+	END +
+	CASE WHEN LEN(CAST(CAST(CASE WHEN vw.PRICE = 0 THEN -1 ELSE vw.PRICE END as DECIMAL(10,2)) as varchar(14))) &lt; 14
+		THEN CAST(CAST(CASE WHEN vw.PRICE = 0 THEN -1 ELSE vw.PRICE END as DECIMAL(10,2)) as varchar(14)) + SPACE(14 - LEN(CAST(CAST(CASE WHEN vw.PRICE = 0 THEN -1 ELSE vw.PRICE END as DECIMAL(10,2)) as varchar(14)))) 
+		ELSE CAST(CAST(CASE WHEN vw.PRICE = 0 THEN -1 ELSE vw.PRICE END as DECIMAL(10,2)) as varchar(14)) 
+		END+
+	SPACE(2) +
+	CASE WHEN c.PARTNER_ID_0 = 'MCLANE' THEN 'UK' + CASE WHEN tl.ITEM_UOM_UPC_CODE is null THEN SPACE(30) 
+	ELSE CASE WHEN LEN(SUBSTRING(tl.ITEM_UOM_UPC_CODE, 1, 14) + SPACE(16)) &lt; 30 THEN SUBSTRING(tl.ITEM_UOM_UPC_CODE, 1, 14) + SPACE(30 - LEN(SUBSTRING(tl.ITEM_UOM_UPC_CODE, 1, 14) + SPACE(16))) 
+		 ELSE SUBSTRING(tl.ITEM_UOM_UPC_CODE, 1, 14) + SPACE(16) 
+		 END 
+	END
+	ELSE 'UA' + CASE WHEN tl.ITEM_UOM_UPC_CODE is null THEN SPACE(30) 
+	ELSE CASE WHEN LEN(SUBSTRING(tl.ITEM_UOM_UPC_CODE, 2, 12) + SPACE(18)) &lt; 30 THEN SUBSTRING(tl.ITEM_UOM_UPC_CODE, 2, 12) + SPACE(30 - LEN(SUBSTRING(tl.ITEM_UOM_UPC_CODE, 2, 12) + SPACE(18))) 
+		 ELSE SUBSTRING(tl.ITEM_UOM_UPC_CODE, 2, 12) + SPACE(18) 
+		 END 
+	END
+	END +  
+	'UP' +
+	CASE WHEN tl.ITEM_UOM_UPC_CODE is null THEN SPACE(30) ELSE CASE WHEN LEN(SUBSTRING(tl.ITEM_UOM_UPC_CODE, 3, 12) + SPACE(18)) &lt; 30 THEN SUBSTRING(tl.ITEM_UOM_UPC_CODE, 3, 12) + SPACE(30 - LEN(SUBSTRING(tl.ITEM_UOM_UPC_CODE, 3, 12) + SPACE(18))) ELSE SUBSTRING(tl.ITEM_UOM_UPC_CODE, 3, 12) + SPACE(18) END END +
+	CASE WHEN tl.CUSTOMER_NO_ is null THEN 'VN' ELSE 'UI' END +
+	CASE WHEN LEN(ISNULL(tl.CUSTOMER_NO_, i.NAME)) &lt; 30 THEN ISNULL(tl.CUSTOMER_NO_, i.NAME) + SPACE(30 - LEN(ISNULL(tl.CUSTOMER_NO_, i.NAME))) ELSE SUBSTRING(ISNULL(tl.CUSTOMER_NO_, i.NAME), 1, 30) END +
+	CASE WHEN LEN(CAST(ISNULL(i.NO_OF_EACHES, ' ') as varchar(10))) &lt; 10 THEN CAST(ISNULL(i.NO_OF_EACHES, ' ') as varchar(10)) + SPACE(10 - LEN(CAST(ISNULL(i.NO_OF_EACHES, ' ') as varchar(10)))) ELSE SUBSTRING(CAST(ISNULL(i.NO_OF_EACHES, ' ') as varchar(10)), 1, 10) END +
+	'EA ' + CHAR(10) as [810Line],
+	LEN('D00' + CASE WHEN LEN(t.TRANID) &lt; 10 THEN t.TRANID + SPACE(10 - LEN(t.TRANID)) ELSE SUBSTRING(t.TRANID, 1, 10) END +
+	CASE WHEN LEN(CAST((ROW_NUMBER() OVER (ORDER BY tl.TRANSACTION_ORDER)) as varchar(10))) &lt; 10 THEN CAST((ROW_NUMBER() OVER (ORDER BY tl.TRANSACTION_ORDER)) as varchar(10)) + SPACE(10 - LEN(CAST((ROW_NUMBER() OVER (ORDER BY tl.TRANSACTION_ORDER)) as varchar(10)))) ELSE CAST((ROW_NUMBER() OVER (ORDER BY tl.TRANSACTION_ORDER)) as varchar(10)) END +
+	CASE WHEN LEN(CAST((ISNULL(CASE WHEN vw.INVOICE_QTY = 0 THEN 0 ELSE vw.INVOICE_QTY END, 0)) as varchar(10))) &lt; 10 THEN CAST((ISNULL(CASE WHEN vw.INVOICE_QTY = 0 THEN 0 ELSE vw.INVOICE_QTY END, 0)) as varchar(10)) + SPACE(10 - LEN(CAST((ISNULL(CASE WHEN vw.INVOICE_QTY = 0 THEN 0 ELSE vw.INVOICE_QTY END, 0)) as varchar(10)))) ELSE CAST((ISNULL(CASE WHEN vw.INVOICE_QTY = 0 THEN 0 ELSE vw.INVOICE_QTY END, 0)) as varchar(10)) 
+	END +
+	CASE WHEN UOM.NAME &lt;&gt; 'Display' 
+	THEN
+		CASE WHEN UOM.NAME = 'Case' or UOM.NAME = 'Cs' THEN 'CA' ELSE IIF(UOM.NAME = 'Each', 'EA', SUBSTRING(UOM.NAME, 1, 2)) END
+	ELSE 'DS' 
+	END +
+	CASE WHEN LEN(CAST(CAST(CASE WHEN vw.PRICE = 0 THEN -1 ELSE vw.PRICE END * -1 as DECIMAL(10,2)) as varchar(14))) &lt; 14
+		THEN CAST(CAST(CASE WHEN vw.PRICE = 0 THEN -1 ELSE vw.PRICE END * -1 as DECIMAL(10,2)) as varchar(14)) + SPACE(14 - LEN(CAST(CAST(CASE WHEN vw.PRICE = 0 THEN -1 ELSE vw.PRICE END * -1 as DECIMAL(10,2)) as varchar(14)))) 
+		ELSE CAST(CAST(CASE WHEN vw.PRICE = 0 THEN -1 ELSE vw.PRICE END * -1 as DECIMAL(10,2)) as varchar(14)) 
+		END+
+	SPACE(2) +
+	CASE WHEN c.PARTNER_ID_0 = 'MCLANE' THEN 'UK' + CASE WHEN tl.ITEM_UOM_UPC_CODE is null THEN SPACE(30) 
+	ELSE CASE WHEN LEN(SUBSTRING(tl.ITEM_UOM_UPC_CODE, 1, 14) + SPACE(16)) &lt; 30 THEN SUBSTRING(tl.ITEM_UOM_UPC_CODE, 1, 14) + SPACE(30 - LEN(SUBSTRING(tl.ITEM_UOM_UPC_CODE, 1, 14) + SPACE(16))) 
+		 ELSE SUBSTRING(tl.ITEM_UOM_UPC_CODE, 1, 14) + SPACE(16) 
+		 END 
+	END
+	ELSE 'UA' + CASE WHEN tl.ITEM_UOM_UPC_CODE is null THEN SPACE(30) 
+	ELSE CASE WHEN LEN(SUBSTRING(tl.ITEM_UOM_UPC_CODE, 2, 12) + SPACE(18)) &lt; 30 THEN SUBSTRING(tl.ITEM_UOM_UPC_CODE, 2, 12) + SPACE(30 - LEN(SUBSTRING(tl.ITEM_UOM_UPC_CODE, 2, 12) + SPACE(18))) 
+		 ELSE SUBSTRING(tl.ITEM_UOM_UPC_CODE, 2, 12) + SPACE(18) 
+		 END 
+	END
+	END +  
+	'UP' +
+	CASE WHEN tl.ITEM_UOM_UPC_CODE is null THEN SPACE(30) ELSE CASE WHEN LEN(SUBSTRING(tl.ITEM_UOM_UPC_CODE, 3, 12) + SPACE(18)) &lt; 30 THEN SUBSTRING(tl.ITEM_UOM_UPC_CODE, 3, 12) + SPACE(30 - LEN(SUBSTRING(tl.ITEM_UOM_UPC_CODE, 3, 12) + SPACE(18))) ELSE SUBSTRING(tl.ITEM_UOM_UPC_CODE, 3, 12) + SPACE(18) END END +
+	CASE WHEN tl.CUSTOMER_NO_ is null THEN 'VN' ELSE 'UI' END +
+	CASE WHEN LEN(ISNULL(tl.CUSTOMER_NO_, i.NAME)) &lt; 30 THEN ISNULL(tl.CUSTOMER_NO_, i.NAME) + SPACE(30 - LEN(ISNULL(tl.CUSTOMER_NO_, i.NAME))) ELSE SUBSTRING(ISNULL(tl.CUSTOMER_NO_, i.NAME), 1, 30) END +
+	CASE WHEN LEN(CAST(ISNULL(i.NO_OF_EACHES, ' ') as varchar(10))) &lt; 10 THEN CAST(ISNULL(i.NO_OF_EACHES, ' ') as varchar(10)) + SPACE(10 - LEN(CAST(ISNULL(i.NO_OF_EACHES, ' ') as varchar(10)))) ELSE SUBSTRING(CAST(ISNULL(i.NO_OF_EACHES, ' ') as varchar(10)), 1, 10) END +
+	'EA ' + CHAR(10)) as LineLength,
+	400 as [rownum],
+	13 + tl.TRANSACTION_ORDER as rectype
+	from TRANSACTIONs t
+	inner join TRANSACTION_LINES tl on t.TRANSACTION_ID = tl.TRANSACTION_ID
+	inner join CUSTOMERS c on t.ENTITY_ID = c.CUSTOMER_ID
+	inner join UOM on uom.UOM_ID = tl.UNIT_OF_MEASURE_ID
+	inner join ITEMS i on tl.ITEM_ID = i.ITEM_ID
+	inner join vw_InvoicesEDI vw on tl.TRANSACTION_ID = vw.TRANSACTION_ID and tl.TRANSACTION_ORDER = vw.TRANSACTION_ORDER
+	where tl.ITEM_UOM_UPC_CODE is not null and vw.INVOICE_QTY &lt;&gt; 0 and t.TRANSACTION_ID = ?
+UNION
+select  'D05F' + CASE WHEN LEN(RTRIM(LTRIM(tl.MEMO))) &lt; 45 THEN RTRIM(LTRIM(tl.MEMO)) + SPACE(45 - LEN(RTRIM(LTRIM(tl.MEMO)))) ELSE SUBSTRING(RTRIM(LTRIM(tl.MEMO)), 1, 45) END + SPACE(111) + CHAR(10),
+	LEN('D05F' + CASE WHEN LEN(RTRIM(LTRIM(tl.MEMO))) &lt; 45 THEN RTRIM(LTRIM(tl.MEMO)) + SPACE(45 - LEN(RTRIM(LTRIM(tl.MEMO)))) ELSE SUBSTRING(RTRIM(LTRIM(tl.MEMO)), 1, 45) END + SPACE(111) + CHAR(10)) as LineLength,
+	400 as [rownum],
+	13 + tl.TRANSACTION_ORDER + .1 as rectype
+	from TRANSACTIONs t 
+	inner join TRANSACTION_LINES tl on t.TRANSACTION_ID = tl.TRANSACTION_ID
+	inner join vw_InvoicesEDI vw on tl.TRANSACTION_ID = vw.TRANSACTION_ID and tl.TRANSACTION_ORDER = vw.TRANSACTION_ORDER
+	where tl.ITEM_UOM_UPC_CODE is not null and t.TRANSACTION_ID = ?
+UNION
+select 'D10' +
+	CASE WHEN LEN(CAST(ISNULL(i.[ITEMS_PER_UNIT_LOWEST_SELLABL], ' ') as varchar)) &lt; 6 THEN CAST(ISNULL(i.[ITEMS_PER_UNIT_LOWEST_SELLABL], ' ') as varchar) + SPACE(6 - LEN(CAST(ISNULL(i.[ITEMS_PER_UNIT_LOWEST_SELLABL], ' ') as varchar))) ELSE CAST(ISNULL(i.[ITEMS_PER_UNIT_LOWEST_SELLABL], ' ') as varchar) END +
+	SPACE(2) +
+	CASE WHEN LEN(CAST((ISNULL((vw.INVOICE_QTY), 1)) as varchar(10))) &lt; 10 
+		THEN CAST((ISNULL((vw.INVOICE_QTY), 1)) as varchar(10)) + SPACE(10 - LEN(CAST((ISNULL((vw.INVOICE_QTY), 1)) as varchar(10)))) 
+		ELSE CAST((ISNULL((vw.INVOICE_QTY), 1)) as varchar(10)) 
+	END +
+	'EA' +
+	CASE WHEN LEN(CAST(tl.ITEM_NO_OF_EACHES as varchar(10))) &lt; 10 THEN CAST(tl.ITEM_NO_OF_EACHES as varchar(10)) + SPACE(10 - LEN(CAST(tl.ITEM_NO_OF_EACHES as varchar(10)))) ELSE SUBSTRING(CAST(tl.ITEM_NO_OF_EACHES as varchar(10)), 1, 10) END +
+	'  ' + SPACE(8) +
+	CASE WHEN cl.NAME = 'Smokeless' or cl.NAME = 'Chew' or cl.NAME = 'Dry Snuff' or cl.NAME = 'Moist Snuff' THEN 'N ' ELSE SPACE(2) END +
+	CASE WHEN cl.NAME = 'Smokeless' or cl.NAME = 'Chew' or cl.NAME = 'Dry Snuff' or cl.NAME = 'Moist Snuff' THEN
+		CASE WHEN LEN(CAST(CAST(ROUND(ISNULL((vw.INVOICE_QTY)*-1, 1) * ISNULL(mu.WEIGHT_LBS_OR_OZ,0),2,1) as DECIMAL(20,10)) as varchar)) &lt; 9 
+			THEN CAST(CAST(ROUND(ISNULL((vw.INVOICE_QTY), 1)*-1 * ISNULL(mu.WEIGHT_LBS_OR_OZ,0),2,1) as DECIMAL(20,10)) as varchar) + SPACE(9 - LEN(CAST(CAST(ROUND(ISNULL((vw.INVOICE_QTY)*-1, 1) * ISNULL(mu.WEIGHT_LBS_OR_OZ,0),2,1) as DECIMAL(20,10)) as varchar))) 
+			ELSE SUBSTRING(CAST(CAST(ROUND(ISNULL((vw.INVOICE_QTY)*-1, 1) * ISNULL(mu.WEIGHT_LBS_OR_OZ,0),2,1) as DECIMAL(20,10)) as varchar), 1, 9) 
+		END
+	ELSE SPACE(9)
+	END +
+	CASE WHEN cl.NAME = 'Smokeless' or cl.NAME = 'Chew' or cl.NAME = 'Dry Snuff' or cl.NAME = 'Moist Snuff' THEN 'OZ' ELSE SPACE(2) END +
+	SPACE(104) + CHAR(10) as [810Line],
+	LEN('D10' +
+	CASE WHEN LEN(CAST(ISNULL(i.[ITEMS_PER_UNIT_LOWEST_SELLABL], ' ') as varchar)) &lt; 6 THEN CAST(ISNULL(i.[ITEMS_PER_UNIT_LOWEST_SELLABL], ' ') as varchar) + SPACE(6 - LEN(CAST(ISNULL(i.[ITEMS_PER_UNIT_LOWEST_SELLABL], ' ') as varchar))) ELSE CAST(ISNULL(i.[ITEMS_PER_UNIT_LOWEST_SELLABL], ' ') as varchar) END +
+	SPACE(2) +
+	CASE WHEN LEN(CAST((ISNULL((vw.INVOICE_QTY)*-1, 1)) as varchar(10))) &lt; 10 
+		THEN CAST((ISNULL((vw.INVOICE_QTY)*-1, 1)) as varchar(10)) + SPACE(10 - LEN(CAST((ISNULL((vw.INVOICE_QTY)*-1, 1)) as varchar(10)))) 
+		ELSE CAST((ISNULL((vw.INVOICE_QTY)*-1, 1)) as varchar(10)) 
+	END +
+	'EA' +
+	CASE WHEN LEN(CAST(tl.ITEM_NO_OF_EACHES as varchar(10))) &lt; 10 THEN CAST(tl.ITEM_NO_OF_EACHES as varchar(10)) + SPACE(10 - LEN(CAST(tl.ITEM_NO_OF_EACHES as varchar(10)))) ELSE SUBSTRING(CAST(tl.ITEM_NO_OF_EACHES as varchar(10)), 1, 10) END +
+	'  ' + SPACE(8) +
+	CASE WHEN cl.NAME = 'Smokeless' or cl.NAME = 'Chew' or cl.NAME = 'Dry Snuff' or cl.NAME = 'Moist Snuff' THEN 'N ' ELSE SPACE(2) END +
+	CASE WHEN cl.NAME = 'Smokeless' or cl.NAME = 'Chew' or cl.NAME = 'Dry Snuff' or cl.NAME = 'Moist Snuff' THEN
+		CASE WHEN LEN(CAST(CAST(ROUND(ISNULL((vw.INVOICE_QTY)*-1, 1) * ISNULL(mu.WEIGHT_LBS_OR_OZ,0),2,1) as DECIMAL(20,10)) as varchar)) &lt; 9 
+			THEN CAST(CAST(ROUND(ISNULL((vw.INVOICE_QTY), 1)*-1 * ISNULL(mu.WEIGHT_LBS_OR_OZ,0),2,1) as DECIMAL(20,10)) as varchar) + SPACE(9 - LEN(CAST(CAST(ROUND(ISNULL((vw.INVOICE_QTY)*-1, 1) * ISNULL(mu.WEIGHT_LBS_OR_OZ,0),2,1) as DECIMAL(20,10)) as varchar))) 
+			ELSE SUBSTRING(CAST(CAST(ROUND(ISNULL((vw.INVOICE_QTY)*-1, 1) * ISNULL(mu.WEIGHT_LBS_OR_OZ,0),2,1) as DECIMAL(20,10)) as varchar), 1, 9) 
+		END
+	ELSE SPACE(9)
+	END +
+	CASE WHEN cl.NAME = 'Smokeless' or cl.NAME = 'Chew' or cl.NAME = 'Dry Snuff' or cl.NAME = 'Moist Snuff' THEN 'OZ' ELSE SPACE(2) END +
+	SPACE(104) + CHAR(10)) as LineLength,
+	400 as [rownum],
+	13 + tl.TRANSACTION_ORDER + .2 as rectype
+	from TRANSACTIONs t 
+	inner join TRANSACTION_LINES tl on t.TRANSACTION_ID = tl.TRANSACTION_ID
+	inner join CUSTOMERS c on t.ENTITY_ID = c.CUSTOMER_ID
+	inner join ITEMS i on tl.ITEM_ID = i.ITEM_ID
+	inner join CLASSES cl on tl.CLASS_ID = cl.CLASS_ID
+	inner join UOM on uom.UOM_ID = tl.UNIT_OF_MEASURE_ID
+	inner join MULTIPLE_UPC mu on mu.UNIT_ID = uom.UOM_ID and i.ITEM_ID = mu.ITEM_ID
+	inner join vw_InvoicesEDI vw on tl.TRANSACTION_ID = vw.TRANSACTION_ID and tl.TRANSACTION_ORDER = vw.TRANSACTION_ORDER
+	where tl.ITEM_UOM_UPC_CODE is not null and vw.INVOICE_QTY &lt;&gt; 0 and t.TRANSACTION_ID = ? and c.PARTNER_ID_0 &lt;&gt; 'COSTCO'
+UNION
+select 'D15A5  ' + SPACE(10) + '02' + 
+	CASE WHEN LEN(CAST((vw.DISCOUNTPERUNIT*-1) as varchar)) &lt; 9 THEN + CAST((vw.DISCOUNTPERUNIT*-1) as varchar) + SPACE(9 - LEN(CAST((vw.DISCOUNTPERUNIT*-1) as varchar))) ELSE CAST((vw.DISCOUNTPERUNIT*-1) as varchar) END +
+	CASE WHEN LEN(CAST(vw.DISCOUNT*-1 as varchar)) &lt; 9 THEN CAST(vw.DISCOUNT*-1 as varchar) + SPACE(9 - LEN(CAST(vw.DISCOUNT*-1 as varchar))) ELSE CAST(vw.DISCOUNT*-1 as varchar) END +
+	CASE WHEN LEN(CAST(1 as varchar)) &lt; 10 THEN CAST(1 as varchar) + SPACE(10 - LEN(CAST(1 as varchar))) ELSE CAST(1 as varchar) END +
+	CASE WHEN LEN(CAST((vw.DISCOUNTPERUNIT*-1) as varchar)) &lt; 80 THEN  CAST((vw.DISCOUNTPERUNIT*-1) as varchar) + SPACE(80 - LEN(CAST((vw.DISCOUNTPERUNIT*-1) as varchar))) ELSE CAST((vw.DISCOUNTPERUNIT*-1) as varchar) END +
+	'F800' + SPACE(29) + CHAR(10) as [810Line],
+	LEN('D15A5  ' + SPACE(10) + '02' + 
+	CASE WHEN LEN(CAST((vw.DISCOUNTPERUNIT*-1) as varchar)) &lt; 9 THEN + CAST((vw.DISCOUNTPERUNIT*-1) as varchar) + SPACE(9 - LEN(CAST((vw.DISCOUNTPERUNIT*-1) as varchar))) ELSE CAST((vw.DISCOUNTPERUNIT*-1) as varchar) END +
+	CASE WHEN LEN(CAST(vw.DISCOUNT*-1 as varchar)) &lt; 9 THEN CAST(vw.DISCOUNT*-1 as varchar) + SPACE(9 - LEN(CAST(vw.DISCOUNT*-1 as varchar))) ELSE CAST(vw.DISCOUNT*-1 as varchar) END +
+	CASE WHEN LEN(CAST(1 as varchar)) &lt; 10 THEN CAST(1 as varchar) + SPACE(10 - LEN(CAST(1 as varchar))) ELSE CAST(1 as varchar) END +
+	CASE WHEN LEN(CAST((vw.DISCOUNTPERUNIT*-1) as varchar)) &lt; 80 THEN  CAST((vw.DISCOUNTPERUNIT*-1) as varchar) + SPACE(80 - LEN(CAST((vw.DISCOUNTPERUNIT*-1) as varchar))) ELSE CAST((vw.DISCOUNTPERUNIT*-1) as varchar) END +
+	'F800' + SPACE(29) + CHAR(10)) as LineLength,
+	400 as [rownum],
+	13 + tl.TRANSACTION_ORDER + .3 as rectype
+	from TRANSACTIONs t 
+	inner join CUSTOMERS c on t.ENTITY_ID = c.CUSTOMER_ID
+	inner join transaction_lines tl on t.TRANSACTION_ID = tl.TRANSACTION_ID
+	inner join vw_InvoicesEDI vw on tl.TRANSACTION_ID = vw.TRANSACTION_ID and tl.TRANSACTION_ORDER = vw.DISCOUNT_TRANORDER
+	where tl.itemtype = 'Discount'  and vw.INVOICE_QTY &lt;&gt; 0  and t.TRANSACTION_ID = ?) as LineItems
+UNION
+select 'S00' + 
+	CASE WHEN LEN(t.TRANID) &lt; 10 THEN t.TRANID + SPACE(10 - LEN(t.TRANID)) ELSE SUBSTRING(t.TRANID, 1, 10) END +
+	CONVERT(varchar, t.TRANDATE, 112) +
+	CASE WHEN LEN(CAST((select subtotal from vw_EDI_810 where transaction_id = ?) as varchar)) &lt; 10 THEN CAST((select subtotal from vw_EDI_810 where transaction_id =?) as varchar) + SPACE(10 - LEN(CAST((select subtotal from vw_EDI_810 where transaction_id =?) as varchar))) ELSE CAST((select subtotal from vw_EDI_810 where transaction_id =?) as varchar) END +
+	CASE WHEN LEN(CAST(((select total from vw_EDI_810 where transaction_id =?)) as varchar)) &lt; 10 THEN  CAST(((select total from vw_EDI_810 where transaction_id =?)) as varchar) + SPACE(10 - LEN(CAST(((select total from vw_EDI_810 where transaction_id =?)) as varchar))) ELSE CAST(((select total from vw_EDI_810 where transaction_id =?)) as varchar) END +
+	CASE WHEN LEN(CAST((select DISCOUNT_ITEM from vw_EDI_810 where transaction_id =?) as varchar)) &lt; 10 THEN  CAST((select DISCOUNT_ITEM from vw_EDI_810 where transaction_id =?) as varchar) + SPACE(10 - LEN(CAST((select DISCOUNT_ITEM from vw_EDI_810 where transaction_id =?) as varchar))) ELSE CAST((select DISCOUNT_ITEM from vw_EDI_810 where transaction_id =?) as varchar) END +
+	SPACE(109) + CHAR(10) as [810Line],
+	LEN('S00' + 
+	CASE WHEN LEN(t.TRANID) &lt; 10 THEN t.TRANID + SPACE(10 - LEN(t.TRANID)) ELSE SUBSTRING(t.TRANID, 1, 10) END +
+	CONVERT(varchar, t.TRANDATE, 112) +
+	CASE WHEN LEN(CAST((select subtotal from vw_EDI_810 where transaction_id = ?) as varchar)) &lt; 10 THEN CAST((select subtotal from vw_EDI_810 where transaction_id =?) as varchar) + SPACE(10 - LEN(CAST((select subtotal from vw_EDI_810 where transaction_id =?) as varchar))) ELSE CAST((select subtotal from vw_EDI_810 where transaction_id =?) as varchar) END +
+	CASE WHEN LEN(CAST(((select total from vw_EDI_810 where transaction_id =?)) as varchar)) &lt; 10 THEN  CAST(((select total from vw_EDI_810 where transaction_id =?)) as varchar) + SPACE(10 - LEN(CAST(((select total from vw_EDI_810 where transaction_id =?)) as varchar))) ELSE CAST(((select total from vw_EDI_810 where transaction_id =?)) as varchar) END +
+	CASE WHEN LEN(CAST((select DISCOUNT_ITEM from vw_EDI_810 where transaction_id =?) as varchar)) &lt; 10 THEN  CAST((select DISCOUNT_ITEM from vw_EDI_810 where transaction_id =?) as varchar) + SPACE(10 - LEN(CAST((select DISCOUNT_ITEM from vw_EDI_810 where transaction_id =?) as varchar))) ELSE CAST((select DISCOUNT_ITEM from vw_EDI_810 where transaction_id =?) as varchar) END +
+	SPACE(109) + CHAR(10)) as LineLength,
+	1100  as [rownum],
+	17 as rectype
+	from TRANSACTIONs t 
+	where t.TRANSACTION_ID = ?
+UNION
+select 'S05M ' + SPACE(10) +
+	CASE WHEN t.BOL_NO_PDF is null THEN CASE WHEN LEN(sv.SHIP_VIA_2_NAME) &lt; 35 THEN sv.SHIP_VIA_2_NAME + SPACE(35 - LEN(sv.SHIP_VIA_2_NAME)) ELSE SUBSTRING(sv.SHIP_VIA_2_NAME, 1, 35) END  ELSE CASE WHEN LEN(sv.SHIP_VIA_2_NAME + t.BOL_NO_PDF) &lt; 35 THEN sv.SHIP_VIA_2_NAME + t.BOL_NO_PDF + SPACE(35 - LEN(sv.SHIP_VIA_2_NAME + t.BOL_NO_PDF)) ELSE SUBSTRING(sv.SHIP_VIA_2_NAME + t.BOL_NO_PDF, 1, 35) END END +
+	SPACE(2) +
+	CASE WHEN t.BOL_NO_PDF is null THEN 'BM ' ELSE 'FR ' END +
+	CASE WHEN LEN(t.TRANID) &lt; 30 THEN t.TRANID + SPACE(30 - LEN(t.TRANID)) ELSE SUBSTRING(t.TRANID, 1, 30) END +
+	SPACE(75) + CHAR(10) as [810Line],
+	LEN( 'S05M ' + SPACE(10) +
+	CASE WHEN t.BOL_NO_PDF is null THEN CASE WHEN LEN(sv.SHIP_VIA_2_NAME) &lt; 35 THEN sv.SHIP_VIA_2_NAME + SPACE(35 - LEN(sv.SHIP_VIA_2_NAME)) ELSE SUBSTRING(sv.SHIP_VIA_2_NAME, 1, 35) END  ELSE CASE WHEN LEN(sv.SHIP_VIA_2_NAME + t.BOL_NO_PDF) &lt; 35 THEN sv.SHIP_VIA_2_NAME + t.BOL_NO_PDF + SPACE(35 - LEN(sv.SHIP_VIA_2_NAME + t.BOL_NO_PDF)) ELSE SUBSTRING(sv.SHIP_VIA_2_NAME + t.BOL_NO_PDF, 1, 35) END END +
+	SPACE(2) +
+	CASE WHEN t.BOL_NO_PDF is null THEN 'BM ' ELSE 'FR ' END +
+	CASE WHEN LEN(t.TRANID) &lt; 30 THEN t.TRANID + SPACE(30 - LEN(t.TRANID)) ELSE SUBSTRING(t.TRANID, 1, 30) END +
+	SPACE(75) + CHAR(10)) as LineLength,
+	1200  as [rownum],
+	18 as rectype
+	from TRANSACTIONs t 
+	inner join SHIP_VIA_2 sv on t.SHIP_VIA_ID = sv.SHIP_VIA_2_ID
+	where t.TRANSACTION_ID = ?
+UNION
+select 'S15' +
+	CASE WHEN LEN(CAST(CAST((SUM(vw.INVOICE_QTY)) as DECIMAL(10,2)) as varchar)) &lt; 10 
+		THEN CAST(CAST((SUM(vw.INVOICE_QTY)) as DECIMAL(10,2)) as varchar) + SPACE(10 - LEN(CAST(CAST((SUM(vw.INVOICE_QTY)) as DECIMAL(10,2)) as varchar))) 
+		ELSE SUBSTRING(CAST(CAST((SUM(vw.INVOICE_QTY)) as DECIMAL(10,2)) as varchar), 1, 10) 
+	END +
+	'CA' +
+	CASE WHEN SUM(ISNULL(i.WEIGHT, 0)) = 0 THEN
+		'0000000001'
+	ELSE 
+		 CASE WHEN LEN(CAST(CAST(IIF(SUM(ISNULL((vw.INVOICE_QTY)*mu.WEIGHT_LBS_OR_OZ, 0)) &lt; 1, 1, SUM(ISNULL((vw.INVOICE_QTY)*mu.WEIGHT_LBS_OR_OZ, 0))) as DECIMAL(10,2)) as varchar)) &lt; 10
+			THEN CAST(CAST(IIF(SUM(ISNULL((vw.INVOICE_QTY)*mu.WEIGHT_LBS_OR_OZ, 0)) &lt; 1, 1, SUM(ISNULL((vw.INVOICE_QTY)*mu.WEIGHT_LBS_OR_OZ, 0))) as DECIMAL(10,2)) as varchar) + SPACE(10 - LEN(CAST(CAST(IIF(SUM(ISNULL((vw.INVOICE_QTY)*mu.WEIGHT_LBS_OR_OZ, 0)) &lt; 1, 1, SUM(ISNULL((vw.INVOICE_QTY)*mu.WEIGHT_LBS_OR_OZ, 0))) as DECIMAL(10,2)) as varchar))) 
+			ELSE SUBSTRING(CAST(CAST(SUM(ISNULL(mu.WEIGHT_LBS_OR_OZ, 0)) as DECIMAL(10,2)) as varchar), 1, 10) 
+		END
+	END +
+	'LB' + 
+	CASE WHEN LEN(CAST(CAST(SUM(ISNULL(tl.CUBIC_FT_PER_CASE,1)) as DECIMAL(10,2)) as varchar)) &lt; 8 
+		THEN CAST(CAST(SUM(ISNULL(tl.CUBIC_FT_PER_CASE,1)) as DECIMAL(10,2)) as varchar) + SPACE(8 -LEN(CAST(CAST(SUM(ISNULL(tl.CUBIC_FT_PER_CASE,1)) as DECIMAL(10,2)) as varchar)))
+		ELSE SUBSTRING(CAST(CAST(SUM(ISNULL(tl.CUBIC_FT_PER_CASE,1)) as DECIMAL(10,2)) as varchar), 1, 8)
+	END +
+	'CF' + 
+	CASE WHEN LEN(CAST(COUNT(*) as varchar)) &lt; 6 THEN CAST(COUNT(*) as varchar) + SPACE(6 - LEN(CAST(COUNT(*) as varchar))) ELSE SUBSTRING(CAST(COUNT(*) as varchar), 1, 6) END +
+	SPACE(117) + CHAR(10) as [810Line],
+	LEN('S15' +
+	CASE WHEN LEN(CAST(CAST((SUM(vw.INVOICE_QTY)) as DECIMAL(10,2)) as varchar)) &lt; 10 
+		THEN CAST(CAST((SUM(vw.INVOICE_QTY)) as DECIMAL(10,2)) as varchar) + SPACE(10 - LEN(CAST(CAST((SUM(vw.INVOICE_QTY)) as DECIMAL(10,2)) as varchar))) 
+		ELSE SUBSTRING(CAST(CAST((SUM(vw.INVOICE_QTY)) as DECIMAL(10,2)) as varchar), 1, 10) 
+	END +
+	'CA' +
+	CASE WHEN SUM(ISNULL(i.WEIGHT, 0)) = 0 THEN
+		'0000000001'
+	ELSE 
+		 CASE WHEN LEN(CAST(CAST(IIF(SUM(ISNULL((vw.INVOICE_QTY)*mu.WEIGHT_LBS_OR_OZ, 0)) &lt; 1, 1, SUM(ISNULL((vw.INVOICE_QTY)*mu.WEIGHT_LBS_OR_OZ, 0))) as DECIMAL(10,2)) as varchar)) &lt; 10
+			THEN CAST(CAST(IIF(SUM(ISNULL((vw.INVOICE_QTY)*mu.WEIGHT_LBS_OR_OZ, 0)) &lt; 1, 1, SUM(ISNULL((vw.INVOICE_QTY)*mu.WEIGHT_LBS_OR_OZ, 0))) as DECIMAL(10,2)) as varchar) + SPACE(10 - LEN(CAST(CAST(IIF(SUM(ISNULL((vw.INVOICE_QTY)*mu.WEIGHT_LBS_OR_OZ, 0)) &lt; 1, 1, SUM(ISNULL((vw.INVOICE_QTY)*mu.WEIGHT_LBS_OR_OZ, 0))) as DECIMAL(10,2)) as varchar))) 
+			ELSE SUBSTRING(CAST(CAST(SUM(ISNULL(mu.WEIGHT_LBS_OR_OZ, 0)) as DECIMAL(10,2)) as varchar), 1, 10) 
+		END
+	END +
+	'LB' + 
+	CASE WHEN LEN(CAST(CAST(SUM(ISNULL(tl.CUBIC_FT_PER_CASE,1)) as DECIMAL(10,2)) as varchar)) &lt; 8 
+		THEN CAST(CAST(SUM(ISNULL(tl.CUBIC_FT_PER_CASE,1)) as DECIMAL(10,2)) as varchar) + SPACE(8 -LEN(CAST(CAST(SUM(ISNULL(tl.CUBIC_FT_PER_CASE,1)) as DECIMAL(10,2)) as varchar)))
+		ELSE SUBSTRING(CAST(CAST(SUM(ISNULL(tl.CUBIC_FT_PER_CASE,1)) as DECIMAL(10,2)) as varchar), 1, 8)
+	END +
+	'CF' + 
+	CASE WHEN LEN(CAST(COUNT(*) as varchar)) &lt; 6 THEN CAST(COUNT(*) as varchar) + SPACE(6 - LEN(CAST(COUNT(*) as varchar))) ELSE SUBSTRING(CAST(COUNT(*) as varchar), 1, 6) END +
+	SPACE(117) + CHAR(10)) as LineLength,
+	1400  as [rownum],
+	19 as rectype
+	from TRANSACTIONs t 
+	inner join TRANSACTION_LINES tl on t.TRANSACTION_ID = tl.TRANSACTION_ID
+	inner join iTEMS i on tl.ITEM_ID = i.ITEM_ID
+	inner join UOM on uom.UOM_ID = tl.UNIT_OF_MEASURE_ID
+	inner join MULTIPLE_UPC mu on mu.UNIT_ID = uom.UOM_ID and i.ITEM_ID = mu.ITEM_ID
+	inner join vw_InvoicesEDI vw on tl.TRANSACTION_ID = vw.TRANSACTION_ID and tl.TRANSACTION_ORDER = vw.TRANSACTION_ORDER
+	where tl.ITEM_UOM_UPC_CODE is not null and vw.INVOICE_QTY &lt;&gt; 0 and (tl.ITEMTYPE = 'Assembly/Bill of Materials' or tl.ITEMTYPE = 'Inventory Item') and tl.AMOUNT is not null and t.TRANSACTION_ID = ?
+ORDER BY [rownum], rectype</property>
+                    <property
+                      dataType="System.String"
+                      description="The variable that contains the SQL command to be executed."
+                      name="SqlCommandVariable"></property>
+                    <property
+                      dataType="System.Int32"
+                      description="Specifies the column code page to use when code page information is unavailable from the data source."
+                      name="DefaultCodePage">1252</property>
+                    <property
+                      dataType="System.Boolean"
+                      description="Forces the use of the DefaultCodePage property value when describing character data."
+                      name="AlwaysUseDefaultCodePage">false</property>
+                    <property
+                      dataType="System.Int32"
+                      description="Specifies the mode used to access the database."
+                      name="AccessMode"
+                      typeConverter="AccessMode">2</property>
+                    <property
+                      dataType="System.String"
+                      description="The mappings between the parameters in the SQL command and variables."
+                      name="ParameterMapping">"Parameter0:Input",{E988A6EB-2418-42D2-9091-2279B08DF83B};"Parameter1:Input",{E988A6EB-2418-42D2-9091-2279B08DF83B};"Parameter2:Input",{E988A6EB-2418-42D2-9091-2279B08DF83B};"Parameter3:Input",{E988A6EB-2418-42D2-9091-2279B08DF83B};"Parameter4:Input",{E988A6EB-2418-42D2-9091-2279B08DF83B};"Parameter5:Input",{E988A6EB-2418-42D2-9091-2279B08DF83B};"Parameter6:Input",{E988A6EB-2418-42D2-9091-2279B08DF83B};"Parameter7:Input",{E988A6EB-2418-42D2-9091-2279B08DF83B};"Parameter8:Input",{E988A6EB-2418-42D2-9091-2279B08DF83B};"Parameter9:Input",{E988A6EB-2418-42D2-9091-2279B08DF83B};"Parameter10:Input",{E988A6EB-2418-42D2-9091-2279B08DF83B};"Parameter11:Input",{E988A6EB-2418-42D2-9091-2279B08DF83B};"Parameter12:Input",{E988A6EB-2418-42D2-9091-2279B08DF83B};"Parameter13:Input",{E988A6EB-2418-42D2-9091-2279B08DF83B};"Parameter14:Input",{E988A6EB-2418-42D2-9091-2279B08DF83B};"Parameter15:Input",{E988A6EB-2418-42D2-9091-2279B08DF83B};"Parameter16:Input",{E988A6EB-2418-42D2-9091-2279B08DF83B};"Parameter17:Input",{E988A6EB-2418-42D2-9091-2279B08DF83B};"Parameter18:Input",{E988A6EB-2418-42D2-9091-2279B08DF83B};"Parameter19:Input",{E988A6EB-2418-42D2-9091-2279B08DF83B};"Parameter20:Input",{E988A6EB-2418-42D2-9091-2279B08DF83B};"Parameter21:Input",{E988A6EB-2418-42D2-9091-2279B08DF83B};"Parameter22:Input",{E988A6EB-2418-42D2-9091-2279B08DF83B};"Parameter23:Input",{E988A6EB-2418-42D2-9091-2279B08DF83B};"Parameter24:Input",{E988A6EB-2418-42D2-9091-2279B08DF83B};"Parameter25:Input",{E988A6EB-2418-42D2-9091-2279B08DF83B};"Parameter26:Input",{E988A6EB-2418-42D2-9091-2279B08DF83B};"Parameter27:Input",{E988A6EB-2418-42D2-9091-2279B08DF83B};"Parameter28:Input",{E988A6EB-2418-42D2-9091-2279B08DF83B};"Parameter29:Input",{E988A6EB-2418-42D2-9091-2279B08DF83B};"Parameter30:Input",{E988A6EB-2418-42D2-9091-2279B08DF83B};"Parameter31:Input",{E988A6EB-2418-42D2-9091-2279B08DF83B};"Parameter32:Input",{E988A6EB-2418-42D2-9091-2279B08DF83B};"Parameter33:Input",{E988A6EB-2418-42D2-9091-2279B08DF83B};"Parameter34:Input",{E988A6EB-2418-42D2-9091-2279B08DF83B};"Parameter35:Input",{E988A6EB-2418-42D2-9091-2279B08DF83B};"Parameter36:Input",{E988A6EB-2418-42D2-9091-2279B08DF83B};"Parameter37:Input",{E988A6EB-2418-42D2-9091-2279B08DF83B};"Parameter38:Input",{E988A6EB-2418-42D2-9091-2279B08DF83B};"Parameter39:Input",{E988A6EB-2418-42D2-9091-2279B08DF83B};"Parameter40:Input",{E988A6EB-2418-42D2-9091-2279B08DF83B};"Parameter41:Input",{E988A6EB-2418-42D2-9091-2279B08DF83B};"Parameter42:Input",{E988A6EB-2418-42D2-9091-2279B08DF83B};"Parameter43:Input",{E988A6EB-2418-42D2-9091-2279B08DF83B};"Parameter44:Input",{E988A6EB-2418-42D2-9091-2279B08DF83B};"Parameter45:Input",{E988A6EB-2418-42D2-9091-2279B08DF83B};"Parameter46:Input",{E988A6EB-2418-42D2-9091-2279B08DF83B};"Parameter47:Input",{E988A6EB-2418-42D2-9091-2279B08DF83B};"Parameter48:Input",{E988A6EB-2418-42D2-9091-2279B08DF83B};"Parameter49:Input",{E988A6EB-2418-42D2-9091-2279B08DF83B};"Parameter50:Input",{E988A6EB-2418-42D2-9091-2279B08DF83B};"Parameter51:Input",{E988A6EB-2418-42D2-9091-2279B08DF83B};"Parameter52:Input",{E988A6EB-2418-42D2-9091-2279B08DF83B};"Parameter53:Input",{E988A6EB-2418-42D2-9091-2279B08DF83B};"Parameter54:Input",{E988A6EB-2418-42D2-9091-2279B08DF83B};"Parameter55:Input",{E988A6EB-2418-42D2-9091-2279B08DF83B};"Parameter56:Input",{E988A6EB-2418-42D2-9091-2279B08DF83B};"Parameter57:Input",{E988A6EB-2418-42D2-9091-2279B08DF83B};"Parameter58:Input",{E988A6EB-2418-42D2-9091-2279B08DF83B};"Parameter59:Input",{E988A6EB-2418-42D2-9091-2279B08DF83B};"Parameter60:Input",{E988A6EB-2418-42D2-9091-2279B08DF83B};"Parameter61:Input",{E988A6EB-2418-42D2-9091-2279B08DF83B};"Parameter62:Input",{E988A6EB-2418-42D2-9091-2279B08DF83B};"Parameter63:Input",{E988A6EB-2418-42D2-9091-2279B08DF83B};"Parameter64:Input",{E988A6EB-2418-42D2-9091-2279B08DF83B};"Parameter65:Input",{E988A6EB-2418-42D2-9091-2279B08DF83B};"Parameter66:Input",{E988A6EB-2418-42D2-9091-2279B08DF83B};"Parameter67:Input",{E988A6EB-2418-42D2-9091-2279B08DF83B};"Parameter68:Input",{E988A6EB-2418-42D2-9091-2279B08DF83B};"Parameter69:Input",{E988A6EB-2418-42D2-9091-2279B08DF83B};"Parameter70:Input",{E988A6EB-2418-42D2-9091-2279B08DF83B};"Parameter71:Input",{E988A6EB-2418-42D2-9091-2279B08DF83B};"Parameter72:Input",{E988A6EB-2418-42D2-9091-2279B08DF83B};"Parameter73:Input",{E988A6EB-2418-42D2-9091-2279B08DF83B};"Parameter74:Input",{E988A6EB-2418-42D2-9091-2279B08DF83B};"Parameter75:Input",{E988A6EB-2418-42D2-9091-2279B08DF83B};"Parameter76:Input",{E988A6EB-2418-42D2-9091-2279B08DF83B};"Parameter77:Input",{E988A6EB-2418-42D2-9091-2279B08DF83B};"Parameter78:Input",{E988A6EB-2418-42D2-9091-2279B08DF83B};"Parameter79:Input",{E988A6EB-2418-42D2-9091-2279B08DF83B};"Parameter80:Input",{E988A6EB-2418-42D2-9091-2279B08DF83B};"Parameter81:Input",{E988A6EB-2418-42D2-9091-2279B08DF83B};"Parameter82:Input",{E988A6EB-2418-42D2-9091-2279B08DF83B};</property>
+                  </properties>
+                  <connections>
+                    <connection
+                      refId="Package\Foreach Loop Container\Data Flow Task\OLE DB Source.Connections[OleDbConnection]"
+                      connectionManagerID="Package.ConnectionManagers[sqlsw.CoreMaster.webappadmin]"
+                      connectionManagerRefId="Package.ConnectionManagers[sqlsw.CoreMaster.webappadmin]"
+                      description="The OLE DB runtime connection used to access the database."
+                      name="OleDbConnection" />
+                  </connections>
+                  <outputs>
+                    <output
+                      refId="Package\Foreach Loop Container\Data Flow Task\OLE DB Source.Outputs[OLE DB Source Output]"
+                      name="OLE DB Source Output">
+                      <outputColumns>
+                        <outputColumn
+                          refId="Package\Foreach Loop Container\Data Flow Task\OLE DB Source.Outputs[OLE DB Source Output].Columns[810Line]"
+                          dataType="wstr"
+                          errorOrTruncationOperation="Conversion"
+                          errorRowDisposition="FailComponent"
+                          externalMetadataColumnId="Package\Foreach Loop Container\Data Flow Task\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[810Line]"
+                          length="4000"
+                          lineageId="Package\Foreach Loop Container\Data Flow Task\OLE DB Source.Outputs[OLE DB Source Output].Columns[810Line]"
+                          name="810Line"
+                          truncationRowDisposition="FailComponent" />
+                      </outputColumns>
+                      <externalMetadataColumns
+                        isUsed="True">
+                        <externalMetadataColumn
+                          refId="Package\Foreach Loop Container\Data Flow Task\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[810Line]"
+                          dataType="wstr"
+                          length="4000"
+                          name="810Line" />
+                        <externalMetadataColumn
+                          refId="Package\Foreach Loop Container\Data Flow Task\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[LineLength]"
+                          dataType="i4"
+                          name="LineLength" />
+                        <externalMetadataColumn
+                          refId="Package\Foreach Loop Container\Data Flow Task\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[rownum]"
+                          dataType="numeric"
+                          name="rownum"
+                          precision="20"
+                          scale="1" />
+                        <externalMetadataColumn
+                          refId="Package\Foreach Loop Container\Data Flow Task\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[rectype]"
+                          dataType="r8"
+                          name="rectype" />
+                      </externalMetadataColumns>
+                    </output>
+                    <output
+                      refId="Package\Foreach Loop Container\Data Flow Task\OLE DB Source.Outputs[OLE DB Source Error Output]"
+                      isErrorOut="true"
+                      name="OLE DB Source Error Output">
+                      <outputColumns>
+                        <outputColumn
+                          refId="Package\Foreach Loop Container\Data Flow Task\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[810Line]"
+                          dataType="wstr"
+                          length="4000"
+                          lineageId="Package\Foreach Loop Container\Data Flow Task\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[810Line]"
+                          name="810Line" />
+                        <outputColumn
+                          refId="Package\Foreach Loop Container\Data Flow Task\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
+                          dataType="i4"
+                          lineageId="Package\Foreach Loop Container\Data Flow Task\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
+                          name="ErrorCode"
+                          specialFlags="1" />
+                        <outputColumn
+                          refId="Package\Foreach Loop Container\Data Flow Task\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[ErrorColumn]"
+                          dataType="i4"
+                          lineageId="Package\Foreach Loop Container\Data Flow Task\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[ErrorColumn]"
+                          name="ErrorColumn"
+                          specialFlags="2" />
+                      </outputColumns>
+                      <externalMetadataColumns />
+                    </output>
+                  </outputs>
+                </component>
+              </components>
+              <paths>
+                <path
+                  refId="Package\Foreach Loop Container\Data Flow Task.Paths[Data Conversion Output]"
+                  endId="Package\Foreach Loop Container\Data Flow Task\Flat File Destination.Inputs[Flat File Destination Input]"
+                  name="Data Conversion Output"
+                  startId="Package\Foreach Loop Container\Data Flow Task\Data Conversion.Outputs[Data Conversion Output]" />
+                <path
+                  refId="Package\Foreach Loop Container\Data Flow Task.Paths[OLE DB Source Output]"
+                  endId="Package\Foreach Loop Container\Data Flow Task\Data Conversion.Inputs[Data Conversion Input]"
+                  name="OLE DB Source Output"
+                  startId="Package\Foreach Loop Container\Data Flow Task\OLE DB Source.Outputs[OLE DB Source Output]" />
+              </paths>
+            </pipeline>
+          </DTS:ObjectData>
+        </DTS:Executable>
+      </DTS:Executables>
+      <DTS:ForEachVariableMappings>
+        <DTS:ForEachVariableMapping
+          DTS:CreationName=""
+          DTS:DTSID="{51A07048-7E90-4A42-AF01-077B7AF8FFFA}"
+          DTS:ObjectName="{51A07048-7E90-4A42-AF01-077B7AF8FFFA}"
+          DTS:ValueIndex="0"
+          DTS:VariableName="User::TranID" />
+      </DTS:ForEachVariableMappings>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Foreach Loop Container 1"
+      DTS:CreationName="STOCK:FOREACHLOOP"
+      DTS:Description="Foreach Loop Container"
+      DTS:Disabled="True"
+      DTS:DTSID="{F81BCE2B-A06A-421A-A7E8-B942C2067F94}"
+      DTS:ExecutableType="STOCK:FOREACHLOOP"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Foreach Loop Container 1">
+      <DTS:ForEachEnumerator
+        DTS:CreationName="Microsoft.ForEachFileEnumerator"
+        DTS:DTSID="{77C1DCE2-B732-4169-9B4E-856474627A57}"
+        DTS:ObjectName="{77C1DCE2-B732-4169-9B4E-856474627A57}">
+        <DTS:ObjectData>
+          <ForEachFileEnumeratorProperties>
+            <FEFEProperty
+              Folder="C:\Users\JSharpe\OneDrive - Swisher International, Inc\Documents\810s" />
+            <FEFEProperty
+              FileSpec="*.*" />
+            <FEFEProperty
+              FileNameRetrievalType="0" />
+            <FEFEProperty
+              Recurse="0" />
+          </ForEachFileEnumeratorProperties>
+        </DTS:ObjectData>
+      </DTS:ForEachEnumerator>
+      <DTS:Variables />
+      <DTS:Executables>
+        <DTS:Executable
+          DTS:refId="Package\Foreach Loop Container 1\FTP Task"
+          DTS:CreationName="Microsoft.FtpTask"
+          DTS:Description="FTP Task"
+          DTS:DTSID="{AEA7D584-E7F1-4CD0-932C-C8D3A8BEE865}"
+          DTS:ExecutableType="Microsoft.FtpTask"
+          DTS:LocaleID="-1"
+          DTS:ObjectName="FTP Task"
+          DTS:ThreadHint="0">
+          <DTS:Variables />
+          <DTS:ObjectData>
+            <FtpData
+              ConnectionName="{AF792A55-DC63-4984-B159-C2AC401EEC8A}"
+              TaskIsLocalPathVar="True"
+              TaskLocalPath="User::fileNames"
+              TaskRemotePath="/NetSuite/InBox"
+              TaskOverwriteDest="True" />
+          </DTS:ObjectData>
+        </DTS:Executable>
+        <DTS:Executable
+          DTS:refId="Package\Foreach Loop Container 1\Move Files to Archive"
+          DTS:CreationName="Microsoft.FileSystemTask"
+          DTS:Description="Archive EDI 810s"
+          DTS:DTSID="{d4ebe2a7-5133-40b7-9b7a-5cbe29c7e546}"
+          DTS:ExecutableType="Microsoft.FileSystemTask"
+          DTS:LocaleID="-1"
+          DTS:ObjectName="Move Files to Archive"
+          DTS:TaskContact="File System Task;Microsoft Corporation; SQL Server 2017 RC1; © 2017 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+          DTS:ThreadHint="0">
+          <DTS:Variables />
+          <DTS:ObjectData>
+            <FileSystemData
+              TaskOperationType="MoveFile"
+              TaskOverwriteDestFile="True"
+              TaskSourcePath="User::fileNames"
+              TaskIsSourceVariable="True"
+              TaskDestinationPath="User::archiveDestPath"
+              TaskIsDestinationVariable="True" />
+          </DTS:ObjectData>
+        </DTS:Executable>
+      </DTS:Executables>
+      <DTS:PrecedenceConstraints>
+        <DTS:PrecedenceConstraint
+          DTS:refId="Package\Foreach Loop Container 1.PrecedenceConstraints[Constraint]"
+          DTS:CreationName=""
+          DTS:DTSID="{BD3BD458-E91D-4EF8-A218-3C712F6EB2DA}"
+          DTS:From="Package\Foreach Loop Container 1\FTP Task"
+          DTS:LogicalAnd="True"
+          DTS:ObjectName="Constraint"
+          DTS:To="Package\Foreach Loop Container 1\Move Files to Archive" />
+      </DTS:PrecedenceConstraints>
+      <DTS:ForEachVariableMappings>
+        <DTS:ForEachVariableMapping
+          DTS:CreationName=""
+          DTS:DTSID="{5592F7FB-6C17-4F6F-B80C-31725B0DBA9E}"
+          DTS:ObjectName="{5592F7FB-6C17-4F6F-B80C-31725B0DBA9E}"
+          DTS:ValueIndex="0"
+          DTS:VariableName="User::fileNames" />
+      </DTS:ForEachVariableMappings>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\PROD Execute SQL Task"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:Disabled="True"
+      DTS:DTSID="{87AC1EE5-D278-4900-A336-878656127E35}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="PROD Execute SQL Task"
+      DTS:ThreadHint="1">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{4B659815-D6BE-4AA3-958F-B101C3BD653B}"
+          SQLTask:SqlStatementSource="select t.TRANSACTION_ID, t.CREATE_DATE from TRANSACTIONS t inner join CUSTOMERS c on t.ENTITY_ID = c.CUSTOMER_ID&#xA;&#x9;inner join ORDER_TYPE ot on ot.ORDER_TYPE_ID = t.ORDER_TYPE_ID&#xA;&#x9;where TRANSACTION_TYPE  = 'Invoice' and c.EDI_CUSTOMER = 'T' and t.STATUS = 'Open' and&#xA;&#x9;DATEADD(hour, -5, t.CREATE_DATE) between getdate()-1 and getdate()&#xA;&#xA;&#xA;"
+          SQLTask:ResultType="ResultSetType_Rowset" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask">
+          <SQLTask:ResultBinding
+            SQLTask:ResultName="0"
+            SQLTask:DtsVariableName="User::TranIDs" />
+        </SQLTask:SqlTaskData>
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\SQL Task for specific invoices"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{037df5da-720a-45dc-886e-6073ebebda29}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="SQL Task for specific invoices"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{4B659815-D6BE-4AA3-958F-B101C3BD653B}"
+          SQLTask:SqlStatementSource="select transaction_id, t.create_date, transaction_type, t.status, ot.ORDER_TYPE_NAME, c.EDI_CUSTOMER&#xA;from transactions t inner join ORDER_TYPE ot on ot.ORDER_TYPE_ID = t.ORDER_TYPE_ID&#xA;inner join CUSTOMERS c on t.ENTITY_ID = c.CUSTOMER_ID&#xA;where transaction_id in ('6487592','6488398')"
+          SQLTask:ResultType="ResultSetType_Rowset" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask">
+          <SQLTask:ResultBinding
+            SQLTask:ResultName="0"
+            SQLTask:DtsVariableName="User::TranIDs" />
+        </SQLTask:SqlTaskData>
+      </DTS:ObjectData>
+    </DTS:Executable>
+  </DTS:Executables>
+  <DTS:PrecedenceConstraints>
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint]"
+      DTS:CreationName=""
+      DTS:DTSID="{3124D7A7-E35A-405D-B95B-118B3EC5D7E3}"
+      DTS:From="Package\PROD Execute SQL Task"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint"
+      DTS:To="Package\Foreach Loop Container" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 1]"
+      DTS:CreationName=""
+      DTS:DTSID="{1A5A6C73-BDEB-4EED-AE40-7ECDC6621356}"
+      DTS:From="Package\Foreach Loop Container"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 1"
+      DTS:To="Package\Foreach Loop Container 1" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 2]"
+      DTS:CreationName=""
+      DTS:DTSID="{3413D778-2B2F-45AB-A637-BD1176DE4552}"
+      DTS:From="Package\SQL Task for specific invoices"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 2"
+      DTS:To="Package\Foreach Loop Container" />
+  </DTS:PrecedenceConstraints>
+  <DTS:DesignTimeProperties><![CDATA[<?xml version="1.0"?>
+<!--This CDATA section contains the layout information of the package. The section includes information such as (x,y) coordinates, width, and height.-->
+<!--If you manually edit this section and make a mistake, you can delete it. -->
+<!--The package will still be able to load normally but the previous layout information will be lost and the designer will automatically re-arrange the elements on the design surface.-->
+<Objects
+  Version="8">
+  <!--Each node below will contain properties that do not affect runtime behavior.-->
+  <Package
+    design-time-name="Package">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="16" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
+        <NodeLayout
+          Size="151,42"
+          Id="Package\Foreach Loop Container\Data Flow Task"
+          TopLeft="42.3809476748885,20.2168616009191" />
+        <ContainerLayout
+          HeaderHeight="43"
+          IsExpanded="True"
+          PanelSize="224,116"
+          Size="224,159"
+          Id="Package\Foreach Loop Container"
+          TopLeft="137.333333359824,107" />
+        <NodeLayout
+          Size="122,42"
+          Id="Package\Foreach Loop Container 1\FTP Task"
+          TopLeft="35.8148158155842,15.2296296235072" />
+        <NodeLayout
+          Size="132,42"
+          Id="Package\Foreach Loop Container 1\Move Files to Archive"
+          TopLeft="36.518519372116,77.08571421487" />
+        <EdgeLayout
+          Id="Package\Foreach Loop Container 1.PrecedenceConstraints[Constraint]"
+          TopLeft="35.8148158155842,36.0296296235072">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0.703703556531877,61.8560845913628"
+              Start="0,0"
+              End="-6.79629644346812,61.8560845913628">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="-18.5,0" />
+                  <mssgle:CubicBezierSegment
+                    Point1="-18.5,0"
+                    Point2="-22.5,0"
+                    Point3="-22.5,4" />
+                  <mssgle:LineSegment
+                    End="-22.5,57.8560845913628" />
+                  <mssgle:CubicBezierSegment
+                    Point1="-22.5,57.8560845913628"
+                    Point2="-22.5,61.8560845913628"
+                    Point3="-18.5,61.8560845913628" />
+                  <mssgle:LineSegment
+                    End="-6.79629644346812,61.8560845913628" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <ContainerLayout
+          HeaderHeight="43"
+          IsExpanded="True"
+          PanelSize="190,146"
+          Size="190,189"
+          Id="Package\Foreach Loop Container 1"
+          TopLeft="425.592584144922,166.444443526091" />
+        <NodeLayout
+          Size="205,42"
+          Id="Package\PROD Execute SQL Task"
+          TopLeft="90.6666666401757,28.6933333388434" />
+        <NodeLayout
+          Size="218,42"
+          Id="Package\SQL Task for specific invoices"
+          TopLeft="343.166666580571,25.1733333347109" />
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint]"
+          TopLeft="193.066666640176,70.2933333388434">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="20.2666667196486,36.7066666611566"
+              Start="0,0"
+              End="20.2666667196486,29.2066666611566">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,17.8678014151571" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,17.8678014151571"
+                    Point2="0,21.8678014151571"
+                    Point3="4,21.8678014151571" />
+                  <mssgle:LineSegment
+                    End="16.2666667196486,21.8678014151571" />
+                  <mssgle:CubicBezierSegment
+                    Point1="16.2666667196486,21.8678014151571"
+                    Point2="20.2666667196486,21.8678014151571"
+                    Point3="20.2666667196486,25.8678014151571" />
+                  <mssgle:LineSegment
+                    End="20.2666667196486,29.2066666611566" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 1]"
+          TopLeft="361.333333359824,186.6">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="64.2592507850977,74.244443526091"
+              Start="0,0"
+              End="56.7592507850977,74.244443526091">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="28.1296253925489,0" />
+                  <mssgle:CubicBezierSegment
+                    Point1="28.1296253925489,0"
+                    Point2="32.1296253925489,0"
+                    Point3="32.1296253925489,4" />
+                  <mssgle:LineSegment
+                    End="32.1296253925489,70.244443526091" />
+                  <mssgle:CubicBezierSegment
+                    Point1="32.1296253925489,70.244443526091"
+                    Point2="32.1296253925489,74.244443526091"
+                    Point3="36.1296253925489,74.244443526091" />
+                  <mssgle:LineSegment
+                    End="56.7592507850977,74.244443526091" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 2]"
+          TopLeft="451.966666580571,66.7733333347109">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="-166.633333220747,40.2266666652891"
+              Start="0,0"
+              End="-166.633333220747,32.7266666652891">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,19.9648226942148" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,19.9648226942148"
+                    Point2="0,23.9648226942148"
+                    Point3="-4,23.9648226942148" />
+                  <mssgle:LineSegment
+                    End="-162.633333220747,23.9648226942148" />
+                  <mssgle:CubicBezierSegment
+                    Point1="-162.633333220747,23.9648226942148"
+                    Point2="-166.633333220747,23.9648226942148"
+                    Point3="-166.633333220747,27.9648226942148" />
+                  <mssgle:LineSegment
+                    End="-166.633333220747,32.7266666652891" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </Package>
+  <TaskHost
+    design-time-name="Package\Foreach Loop Container\Data Flow Task">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="8" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mssgm="clr-namespace:Microsoft.SqlServer.Graph.Model;assembly=Microsoft.SqlServer.Graph">
+        <NodeLayout
+          Size="150.4,41.6"
+          Id="Package\Foreach Loop Container\Data Flow Task\OLE DB Source"
+          TopLeft="111,42" />
+        <NodeLayout
+          Size="172,41.6"
+          Id="Package\Foreach Loop Container\Data Flow Task\Flat File Destination"
+          TopLeft="114.734693821943,204.386554487024" />
+        <NodeLayout
+          Size="156,41.6"
+          Id="Package\Foreach Loop Container\Data Flow Task\Data Conversion"
+          TopLeft="249,126" />
+        <EdgeLayout
+          Id="Package\Foreach Loop Container\Data Flow Task.Paths[Data Conversion Output]"
+          TopLeft="327,167.6">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="-126.265306178057,36.7865544870237"
+              Start="0,0"
+              End="-126.265306178057,29.2865544870237">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,14.3932772435119" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,14.3932772435119"
+                    Point2="0,18.3932772435119"
+                    Point3="-4,18.3932772435119" />
+                  <mssgle:LineSegment
+                    End="-122.265306178057,18.3932772435119" />
+                  <mssgle:CubicBezierSegment
+                    Point1="-122.265306178057,18.3932772435119"
+                    Point2="-126.265306178057,18.3932772435119"
+                    Point3="-126.265306178057,22.3932772435119" />
+                  <mssgle:LineSegment
+                    End="-126.265306178057,29.2865544870237" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="0,0,0,0"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\Foreach Loop Container\Data Flow Task.Paths[OLE DB Source Output]"
+          TopLeft="186,84">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="141,42"
+              Start="0,0"
+              End="141,34.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,17" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,17"
+                    Point2="0,21"
+                    Point3="4,21" />
+                  <mssgle:LineSegment
+                    End="137,21" />
+                  <mssgle:CubicBezierSegment
+                    Point1="137,21"
+                    Point2="141,21"
+                    Point3="141,25" />
+                  <mssgle:LineSegment
+                    End="141,34.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="0,0,0,0"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </TaskHost>
+  <PipelineComponentMetadata
+    design-time-name="Package\Foreach Loop Container\Data Flow Task\OLE DB Source">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+</Objects>]]></DTS:DesignTimeProperties>
+</DTS:Executable>
